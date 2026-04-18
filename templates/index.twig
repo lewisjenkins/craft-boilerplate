@@ -1,0 +1,11 @@
+{# In dev, jump straight to the component styleguide.
+   Remove or wrap this block once real homepage content exists. #}
+{% if craft.app.config.general.devMode %}
+    {% redirect 'styleguide' 302 %}
+{% endif %}
+
+{% extends "_layouts/base.twig" %}
+
+{% block body %}
+    {# Real homepage content goes here. #}
+{% endblock %}

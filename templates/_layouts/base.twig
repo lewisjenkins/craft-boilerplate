@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <title>{% block title %}{{ siteName }}{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600..700&family=Inter:wght@400..700&display=swap">
+
+    {% css '/dist/build.css' %}
+
+    {% block head %}{% endblock %}
+</head>
+<body class="font-sans text-slate-900 antialiased">
+
+    <a href="#main"
+       class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-white">
+        Skip to main content
+    </a>
+
+    {% include '_layouts/header.twig' %}
+
+    <main id="main" tabindex="-1">
+        {% block body %}{% endblock %}
+    </main>
+
+    {% include '_layouts/footer.twig' %}
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+{% extends "_layouts/base.twig" %}
+
+{% block title %}Styleguide · {{ siteName }}{% endblock %}
+
+{% block body %}
+
+<section>
+    <div class="contain p-12">
+        <div class="prose">
+
+            <h1>The quick brown fox jumps over the lazy dog</h1>
+
+            <p class="lead">This is an introduction paragraph, the kind that sits below an h1 and sets the tone for the article. It
+                contains a mix of <strong>strong emphasis</strong>, <em>italic emphasis</em>, and <a href="#">a link to
+                    somewhere</a>. The typography system handles all three consistently.</p>
+
+            <p>A second paragraph, because one is rarely enough to establish rhythm. Notice the spacing between
+                paragraphs versus the spacing before the next heading — the heading sits closer to the content it
+                introduces than to the section above.</p>
+
+            <h2>A secondary heading</h2>
+
+            <p>Body copy continues. Here's an unordered list:</p>
+
+            <ul>
+                <li>First item in the list</li>
+                <li>Second item, slightly longer to show how multi-line list items wrap and breathe</li>
+                <li>
+                    Third item with nested children:
+                    <ul>
+                        <li>A nested item</li>
+                        <li>Another nested item</li>
+                    </ul>
+                </li>
+                <li>Fourth item back at the top level</li>
+            </ul>
+
+            <h3>A tertiary heading</h3>
+
+            <p>Sometimes you want to reference code inline — like <code>display: grid</code> or
+                <code>var(--prose-base)</code> — and the typography treats it as a small visual token within the
+                sentence.</p>
+
+            <blockquote>
+                <p>Typography is the craft of endowing human language with a durable visual form. It is the most
+                    important part of graphic design — because it is the one part that readers actually read.</p>
+            </blockquote>
+
+            <p>Block quotes sit between paragraphs with their own visual weight, and for longer quotes they can span
+                multiple paragraphs without losing the left-border treatment.</p>
+
+            <h3>Ordered lists and code blocks</h3>
+
+            <ol>
+                <li>First step in a process</li>
+                <li>Second step, with more detail to show how numbered items handle wrapping</li>
+                <li>Third and final step</li>
+            </ol>
+
+            <pre><code>// A code block for longer snippets
+function greet(name) {
+    return `Hello, ${name}`;
+}
+
+greet("World");</code></pre>
+
+            <p>Code blocks handle horizontal overflow cleanly for long lines, and use a subtle background to distinguish
+                them from body copy without overwhelming the page.</p>
+
+            <h3>Tables</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Column one</th>
+                        <th>Column two</th>
+                        <th>Column three</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cell content</td>
+                        <td>More cell content</td>
+                        <td>Even more</td>
+                    </tr>
+                    <tr>
+                        <td>Second row</td>
+                        <td>Second row data</td>
+                        <td>Final cell</td>
+                    </tr>
+                    <tr>
+                        <td>Third row</td>
+                        <td>More data</td>
+                        <td>Last value</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <p>A horizontal rule marks a stronger break than a heading does — useful for separating distinct sections
+                within a long article. A final paragraph closes things out, demonstrating the <code>:last-child</code>
+                margin reset that prevents trailing whitespace below the last element.</p>
+
+        </div>
+    </div>
+</section>
+
+
+{# Dark section with .prose-white variant. Background is a utility on
+the section; only text colours come from .prose-white. #}
+<section class="bg-slate-900">
+    <div class="contain p-12">
+
+        <div class="prose prose-white">
+
+            <h2>On dark backgrounds</h2>
+
+            <p>The <code>.prose-white</code> variant swaps text colours for use on dark sections — heroes, feature
+                blocks, calls-to-action. The background is controlled separately via a utility class, keeping typography
+                and layout concerns cleanly divided.</p>
+
+            <p>Links stay white on dark backgrounds — the underline carries the "this is a link" signal, and <a
+                    href="#">remain clearly interactive</a>. Muted text like captions also adjusts to stay legible.</p>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+@theme {
+    --breakpoint-*: initial;
+    --breakpoint-sm: 768px;
+}
+
+@utility contain {
+    max-width: 1536px;
+    margin-inline: auto;
+}
+
+/* 1536px is the layout cap — keep .contain max-width and these media queries in sync. */
+@layer base {
+    @media screen and (min-width: 768px) and (max-width: 1536px) {
+        html { font-size: 1.40625vw; }
+    }
+    @media screen and (min-width: 1536px) {
+        html { font-size: 21.6px; }
+    }
+}

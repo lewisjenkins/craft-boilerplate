@@ -1,0 +1,13 @@
+# This folder doubles as a working Craft install AND the boilerplate repo.
+# Track only the boilerplate-relevant files; ignore everything else
+# (vendor, node_modules, Craft scaffolding, build output, etc.)
+
+/*
+
+!/.gitignore
+!/CLAUDE.md
+!/install.sh
+!/package.json
+!/README.md
+!/src
+!/templates

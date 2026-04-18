@@ -1,0 +1,20 @@
+@theme {
+    --font-sans:    "Inter", system-ui, sans-serif;
+    --font-display: "Fraunces", Georgia, serif;
+}
+
+:root {
+    --prose-font-body:    var(--font-sans);
+    --prose-font-heading: var(--font-display);
+
+    --prose-color-link: var(--color-blue-400);
+}
+
+.prose-white {
+    --prose-color-body:    var(--color-white);
+    --prose-color-heading: var(--color-white);
+    --prose-color-muted:   var(--color-slate-300);
+    --prose-color-link:    var(--color-white);
+    --prose-color-border:  var(--color-slate-600);
+    --prose-color-code-bg: var(--color-slate-800);
+}

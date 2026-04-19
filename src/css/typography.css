@@ -116,10 +116,16 @@
        For introductory copy sitting below an h1 or at the start of a section.
        A subtle bump (12.5%) rather than a dramatic step — keeps the lead
        feeling anchored to body type. Bump --prose-lead-size for more drama,
-       or set --prose-lead-color: var(--prose-color-muted) for a softer treatment. */
+       or set --prose-lead-color: var(--prose-color-muted) for a softer treatment.
+
+       --prose-lead-color is intentionally NOT declared here. Its default
+       (fall back to --prose-color-body) is applied at the use site via
+       var() fallback, so variants like .prose-white that override
+       --prose-color-body are followed correctly. Declaring it at :root
+       would freeze the value to :root's --prose-color-body at computed-
+       value time and descendant overrides wouldn't propagate. */
     --prose-lead-size:        calc(var(--prose-base) * 1.125);
     --prose-lead-line-height: 1.55;
-    --prose-lead-color:       var(--prose-color-body);
     --prose-lead-margin:      1.5em;
 }
 
@@ -207,7 +213,7 @@
 .prose p.lead {
     font-size: var(--prose-lead-size);
     line-height: var(--prose-lead-line-height);
-    color: var(--prose-lead-color);
+    color: var(--prose-lead-color, var(--prose-color-body));
     margin-bottom: var(--prose-lead-margin);
 }
 

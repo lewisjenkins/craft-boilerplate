@@ -4,13 +4,14 @@ Conventions, templates, and Tailwind 4 setup for new Craft CMS 5 projects.
 
 ## Install
 
-After `composer create-project craftcms/craft myproject` and `php craft install`, from the project root:
-
 ```bash
+mkdir myproject && cd myproject
+composer create-project craftcms/craft .
+php craft install
 curl -fsSL https://raw.githubusercontent.com/lewisjenkins/craft-boilerplate/main/install.sh | bash
 ```
 
-This overlays `src/`, `templates/`, `package.json`, and `CLAUDE.md`, then runs `npm install` and `npm run css`. The new project is ready to develop against — visit `/styleguide` in dev to see the prose system rendered.
+The final command overlays `src/`, `templates/`, `package.json`, and `CLAUDE.md`, then runs `npm install` and `npm run css`. The new project is ready to develop against — visit `/styleguide` in dev to see the prose system rendered.
 
 ## What's inside
 

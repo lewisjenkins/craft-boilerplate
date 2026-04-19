@@ -5,7 +5,6 @@ Conventions, templates, and Tailwind 4 setup for new Craft CMS 5 projects.
 ## Install
 
 ```bash
-mkdir myproject && cd myproject
 composer create-project craftcms/craft .
 php craft install
 curl -fsSL https://raw.githubusercontent.com/lewisjenkins/craft-boilerplate/main/install.sh | bash

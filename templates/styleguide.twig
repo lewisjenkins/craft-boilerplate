@@ -168,41 +168,163 @@ greet("World");</code></pre>
 
 {# Dark section with .prose-white variant. Background is a utility on
 the section; only text colours come from .prose-white. #}
-<section class="bg-slate-900">
+<section class="bg-neutral-900">
     <div class="contain p-12">
 
 <div class="prose prose-white">
 
-                    <h2>On dark backgrounds</h2>
+                    <h1>The quick brown fox jumps over the lazy dog</h1>
 
-                    <p>The <code>.prose-white</code> variant swaps text colours for use on dark sections — heroes, feature
-                        blocks, calls-to-action. The background is controlled separately via a utility class, keeping typography
-                        and layout concerns cleanly divided.</p>
+                    <p class="lead">This is an introduction paragraph, the kind that sits below an h1 and sets the tone for the article. It
+                        contains a mix of <strong>strong emphasis</strong>, <em>italic emphasis</em>, and <a href="#">a link to
+                            somewhere</a>. The typography system handles all three consistently.</p>
 
-                    <p>Links stay white on dark backgrounds — the underline carries the "this is a link" signal, and <a href="#">remain clearly interactive</a>. Muted text like captions also adjusts to stay legible.</p>
+                    <p>A second paragraph, because one is rarely enough to establish rhythm. Notice the spacing between
+                        paragraphs versus the spacing before the next heading — the heading sits closer to the content it
+                        introduces than to the section above.</p>
 
-                    <h3>Headings in the dark</h3>
+                    <p>A third paragraph continues the thought, giving the reader a chance to settle into the measure before
+                        the first subheading arrives. Long-form content lives or dies on this kind of quiet pacing — the
+                        invisible scaffolding that lets the eye travel without snagging. If a paragraph feels dense, it usually
+                        isn't the words; it's the leading, the measure, or the contrast.</p>
 
-                    <p>Headings in dark sections carry the same hierarchy as their light-background counterparts, with contrast
-                        adjusted so the type sits cleanly against the surface without glowing or shouting. The goal is parity,
-                        not novelty.</p>
+                    <h2>A secondary heading</h2>
 
-                    <blockquote>
-                        <p>Reversed type asks for a little more air. Increase the leading by a fraction, soften the weight if
-                            you can afford to, and watch what the measure does at the lower contrast.</p>
-                    </blockquote>
+                    <p>Secondary headings introduce major shifts in topic without resetting the reader's orientation the way an
+                        h1 would. They carry roughly the weight of a chapter subsection — large enough to command attention,
+                        small enough to belong to the article rather than crown it.</p>
 
-                    <h3>Lists carry across</h3>
+                    <p>Body copy continues. Here's an unordered list:</p>
 
                     <ul>
-                        <li>Bullet markers pick up the body colour and stay visible without competing with the text.</li>
-                        <li>Nested lists retain their indent rhythm, so structure is legible even when the palette inverts.</li>
-                        <li>Long list items wrap cleanly against the darker ground, leading held steady from the light variant.</li>
+                        <li>First item in the list</li>
+                        <li>Second item, slightly longer to show how multi-line list items wrap and breathe</li>
+                        <li>
+                            Third item with nested children:
+                            <ul>
+                                <li>A nested item</li>
+                                <li>Another nested item</li>
+                            </ul>
+                        </li>
+                        <li>Fourth item back at the top level</li>
                     </ul>
 
-                    <p>A closing paragraph rounds out the dark section, confirming that paragraph rhythm, link treatment, and
-                        inline code like <code>--prose-color-body</code> all translate without special-casing. The same prose
-                        rules, a different skin.</p>
+                    <h3>A tertiary heading</h3>
+
+                    <p>Sometimes you want to reference code inline — like <code>display: grid</code> or
+                        <code>var(--prose-base)</code> — and the typography treats it as a small visual token within the
+                        sentence.</p>
+
+                    <p>Inline elements compose without friction: abbreviations like <abbr title="Cascading Style Sheets">CSS</abbr>
+                        sit beside <kbd>⌘</kbd>&nbsp;<kbd>K</kbd> keystrokes, sample output in <samp>→ 200 OK</samp>, and
+                        mathematical variables like <var>x</var> and <var>y</var>, each taking their cue from the surrounding
+                        sentence rather than announcing themselves.</p>
+
+                    <h3>Definition lists</h3>
+
+                    <p>Definition lists are a quietly useful format for glossaries, key-value pairs, and short-form
+                        specifications. They're rarely styled thoughtfully, which makes them a good litmus test for a
+                        typography system.</p>
+
+                    <dl>
+                        <dt>Measure</dt>
+                        <dd>The length of a line of type, typically between 45 and 75 characters for comfortable reading.</dd>
+
+                        <dt>Leading</dt>
+                        <dd>The vertical space between lines of type, usually expressed as a multiple of the font size.</dd>
+
+                        <dt>Tracking</dt>
+                        <dd>The horizontal space applied uniformly across a run of characters — distinct from kerning, which
+                            adjusts individual pairs.</dd>
+                    </dl>
+
+                    <blockquote>
+                        <p>Typography is the craft of endowing human language with a durable visual form. It is the most
+                            important part of graphic design — because it is the one part that readers actually read.</p>
+                    </blockquote>
+
+                    <p>Block quotes sit between paragraphs with their own visual weight, and for longer quotes they can span
+                        multiple paragraphs without losing the left-border treatment.</p>
+
+                    <blockquote>
+                        <p>Good typography is invisible. Bad typography is everywhere. The reader should notice the argument,
+                            not the apparatus that carries it.</p>
+                        <p>This is why the defaults matter more than the flourishes — most of the words on most of the pages
+                            will be set in the body style, and every decision there compounds.</p>
+                    </blockquote>
+
+                    <h3>Ordered lists and code blocks</h3>
+
+                    <ol>
+                        <li>First step in a process</li>
+                        <li>Second step, with more detail to show how numbered items handle wrapping</li>
+                        <li>Third and final step</li>
+                    </ol>
+
+                    <pre><code>// A code block for longer snippets
+function greet(name) {
+    return `Hello, ${name}`;
+}
+
+greet("World");</code></pre>
+
+                    <p>Code blocks handle horizontal overflow cleanly for long lines, and use a subtle background to distinguish
+                        them from body copy without overwhelming the page.</p>
+
+                    <h3>Tables</h3>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Column one</th>
+                                <th>Column two</th>
+                                <th>Column three</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Cell content</td>
+                                <td>More cell content</td>
+                                <td>Even more</td>
+                            </tr>
+                            <tr>
+                                <td>Second row</td>
+                                <td>Second row data</td>
+                                <td>Final cell</td>
+                            </tr>
+                            <tr>
+                                <td>Third row</td>
+                                <td>More data</td>
+                                <td>Last value</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Figures and captions</h3>
+
+                    <p>Figures bundle an image, diagram, or embed together with a caption that describes or credits it. The
+                        caption sits tightly under its figure and reads as a secondary voice — smaller, quieter, slightly
+                        muted.</p>
+
+                    <figure>
+                        <svg viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder figure" style="width:100%;height:auto;display:block;background:#f1f5f9;border-radius:4px;">
+                            <defs>
+                                <pattern id="stripes" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                                    <rect width="12" height="12" fill="#f1f5f9"></rect>
+                                    <line x1="0" y1="0" x2="0" y2="12" stroke="#cbd5e1" stroke-width="6"></line>
+                                </pattern>
+                            </defs>
+                            <rect width="800" height="360" fill="url(#stripes)"></rect>
+                            <text x="400" y="186" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="14" fill="#475569">[ figure placeholder — 800 × 360 ]</text>
+                        </svg>
+                        <figcaption>Figure 1. A placeholder illustration, sized to the prose measure and captioned below.</figcaption>
+                    </figure>
+
+                    <hr>
+
+                    <p>A horizontal rule marks a stronger break than a heading does — useful for separating distinct sections
+                        within a long article. A final paragraph closes things out, demonstrating the <code>:last-child</code>
+                        margin reset that prevents trailing whitespace below the last element.</p>
 
                 </div>
     </div>

@@ -229,6 +229,40 @@
 
 
 /* --------------------------------------------------------------------------
+   Semantic inlines
+
+   abbr[title] uses a dotted underline to signal "hover for expansion" —
+   distinct from the solid underline used on links. kbd mimics a physical
+   keycap with a border and thicker bottom edge. samp (sample output) shares
+   code's monospace face but without the background, since sample output
+   usually stands on its own line. var needs no rule — the browser default
+   (italic) inherits the body font-family from .prose.
+   -------------------------------------------------------------------------- */
+
+.prose abbr[title] {
+    text-decoration: underline dotted;
+    text-underline-offset: 0.15em;
+    cursor: help;
+}
+
+.prose kbd {
+    font-family: var(--prose-font-mono);
+    font-size: 0.85em;
+    padding: 0.1em 0.4em;
+    border: 1px solid var(--prose-color-border);
+    border-bottom-width: 0.15em;
+    border-radius: 0.25em;
+    background: var(--prose-color-code-bg);
+    color: var(--prose-color-heading);
+}
+
+.prose samp {
+    font-family: var(--prose-font-mono);
+    font-size: 0.9em;
+}
+
+
+/* --------------------------------------------------------------------------
    Links
    
    Underlines are on by default (accessibility + convention). The offset
@@ -283,6 +317,30 @@
 /* Nested lists tighten up — they're already visually grouped by indent. */
 .prose li > ul,
 .prose li > ol { margin: 0.5em 0; }
+
+
+/* --------------------------------------------------------------------------
+   Definition lists
+
+   dt/dd pairs get clear separation vertically; dd indents to match ul/ol
+   padding. Browser default is a fixed 40px margin-left on dd, which doesn't
+   scale with the fluid root — explicit em-based padding restores scaling.
+   -------------------------------------------------------------------------- */
+
+.prose dl { margin: 1.25em 0; }
+
+.prose dt {
+    font-weight: 600;
+    color: var(--prose-color-heading);
+    margin-top: 1em;                       /* separates adjacent dt/dd pairs */
+}
+
+.prose dl > dt:first-child { margin-top: 0; }
+
+.prose dd {
+    margin: 0.25em 0 0;
+    padding-left: 1.5em;                   /* matches ul/ol indent */
+}
 
 
 /* --------------------------------------------------------------------------

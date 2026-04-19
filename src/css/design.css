@@ -11,7 +11,7 @@
 
     --prose-color-body:     var(--color-body);
     --prose-color-heading:  var(--color-gray-950);
-    --prose-color-muted:    var(--color-gray-500);
+    --prose-color-muted:    var(--color-gray-600);
     --prose-color-link:     var(--color-blue-400);
     --prose-color-border:   var(--color-gray-300);
     --prose-color-code-bg:  var(--color-gray-100);

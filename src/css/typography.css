@@ -101,30 +101,37 @@
     --prose-color-code-bg:  #f6f8fa;
     
     /* Modular scale
-       Sizes are derived upward from --prose-base by repeated multiplication
-       with --prose-ratio. Change either and everything rescales together. */
+       Sizes derive from --prose-base × --prose-ratio. Change either and
+       everything rescales — including inside variants (.prose-sm etc.)
+       that override --prose-base on a descendant. */
     --prose-base:   1rem;     /* body text size — the anchor */
     --prose-ratio:  1.25;     /* Major Third */
-    
-    --prose-size-sm: calc(var(--prose-base) / var(--prose-ratio));   /* captions, small text */
-    --prose-size-h4: var(--prose-base);                              /* h4 = body (weight does the work) */
-    --prose-size-h3: calc(var(--prose-base)    * var(--prose-ratio));
-    --prose-size-h2: calc(var(--prose-size-h3) * var(--prose-ratio));
-    --prose-size-h1: calc(var(--prose-size-h2) * var(--prose-ratio));
+
+    /* Size tokens are intentionally NOT declared at :root. Each use site
+       computes its default from --prose-base / --prose-ratio / --prose-lead-scale
+       / --prose-color-body via var() fallback. This matters because custom
+       properties inherit their computed values: declaring
+       --prose-size-h1: calc(var(--prose-base) * ...) at :root would freeze
+       the computed value to :root's --prose-base at computed-value time,
+       and descendant overrides of --prose-base would not propagate.
+
+       Override the multipliers — --prose-ratio, --prose-lead-scale — at
+       :root to change the scale proportionally. Override individual size
+       tokens (--prose-size-h1, --prose-size-sm) only when you want to
+       pin a specific size regardless of scale. Override --prose-lead-color
+       to change just the lead's colour. */
 
     /* Lead paragraph
        For introductory copy sitting below an h1 or at the start of a section.
-       A subtle bump (12.5%) rather than a dramatic step — keeps the lead
-       feeling anchored to body type. Bump --prose-lead-size for more drama,
-       or set --prose-lead-color: var(--prose-color-muted) for a softer treatment.
+       Size is always proportional to --prose-base via --prose-lead-scale
+       (default 1.125 — a subtle bump). Override at :root or on a parent
+       to dial the lead more editorial without breaking variant scaling.
+       Pair bigger sizes with tighter line-height:
 
-       --prose-lead-color is intentionally NOT declared here. Its default
-       (fall back to --prose-color-body) is applied at the use site via
-       var() fallback, so variants like .prose-white that override
-       --prose-color-body are followed correctly. Declaring it at :root
-       would freeze the value to :root's --prose-color-body at computed-
-       value time and descendant overrides wouldn't propagate. */
-    --prose-lead-size:        calc(var(--prose-base) * 1.125);
+           1.125×  line-height 1.55   (default — subtle)
+           1.25×   line-height 1.5
+           1.333×  line-height 1.45
+           1.5×    line-height 1.4                                          */
     --prose-lead-line-height: 1.55;
     --prose-lead-margin:      1.5em;
 }
@@ -175,26 +182,26 @@
    that body copy does, and tight leading makes large type feel deliberate. */
 
 .prose h1 {
-    font-size: var(--prose-size-h1);
+    font-size: var(--prose-size-h1, calc(var(--prose-base) * var(--prose-ratio) * var(--prose-ratio) * var(--prose-ratio)));
     line-height: 1.1;
     margin-top: 0;                         /* h1 is typically first-child; belt-and-braces */
     letter-spacing: -0.02em;               /* tighten further at display sizes */
 }
 
 .prose h2 {
-    font-size: var(--prose-size-h2);
+    font-size: var(--prose-size-h2, calc(var(--prose-base) * var(--prose-ratio) * var(--prose-ratio)));
     line-height: 1.2;
     margin-top: 2em;                       /* strong section break */
 }
 
 .prose h3 {
-    font-size: var(--prose-size-h3);
+    font-size: var(--prose-size-h3, calc(var(--prose-base) * var(--prose-ratio)));
     line-height: 1.3;
     margin-top: 1.75em;
 }
 
 .prose h4 {
-    font-size: var(--prose-size-h4);       /* same size as body — bold does the distinguishing */
+    font-size: var(--prose-size-h4, var(--prose-base));   /* same size as body — bold does the distinguishing */
     line-height: 1.4;
     margin-top: 1.5em;
 }
@@ -211,7 +218,7 @@
 
 /* Lead paragraph — opt-in via class. Usage: <p class="lead">…</p> inside .prose. */
 .prose p.lead {
-    font-size: var(--prose-lead-size);
+    font-size: calc(var(--prose-base) * var(--prose-lead-scale, 1.125));
     line-height: var(--prose-lead-line-height);
     color: var(--prose-lead-color, var(--prose-color-body));
     margin-bottom: var(--prose-lead-margin);
@@ -224,7 +231,7 @@
 }
 
 .prose em    { font-style: italic; }
-.prose small { font-size: var(--prose-size-sm); }
+.prose small { font-size: var(--prose-size-sm, calc(var(--prose-base) / var(--prose-ratio))); }
 
 /* sub/sup with line-height: 0 prevents them from disrupting line spacing. */
 .prose sub,
@@ -433,7 +440,7 @@
 
 .prose figcaption {
     margin-top: 0.5em;
-    font-size: var(--prose-size-sm);
+    font-size: var(--prose-size-sm, calc(var(--prose-base) / var(--prose-ratio)));
     color: var(--prose-color-muted);
     text-align: center;
 }
@@ -450,7 +457,7 @@
     width: 100%;
     margin: 1.5em 0;
     border-collapse: collapse;
-    font-size: var(--prose-size-sm);
+    font-size: var(--prose-size-sm, calc(var(--prose-base) / var(--prose-ratio)));
 }
 
 .prose thead { border-bottom: 0.125em solid var(--prose-color-border); }   /* was 2px — scales */

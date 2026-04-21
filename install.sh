@@ -44,5 +44,5 @@ npm run css --silent
 
 echo ""
 echo "✓ Boilerplate applied."
-echo "  • Visit /styleguide in dev to see the prose system"
+echo "  • Visit /kitchen-sink in dev to see the typography system"
 echo "  • Run 'npm run css:dev' for watch mode"

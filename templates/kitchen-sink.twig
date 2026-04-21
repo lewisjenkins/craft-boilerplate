@@ -1,0 +1,204 @@
+{% extends "_layouts/base.twig" %}
+
+{% block title %}Kitchen sink · {{ siteName }}{% endblock %}
+
+{# Capture the full showcase once, render it twice. #}
+{% set content %}
+
+    <h1>The quick brown fox jumps over the lazy dog</h1>
+
+    <p class="lead">This is a lead paragraph — the kind that sits below an <code>h1</code> and sets the tone for the
+        article. It contains <strong>strong emphasis</strong>, <em>italic emphasis</em>, and <a href="#">a link to
+        somewhere</a>.</p>
+
+    <p>A standard paragraph follows. Body copy sits at <code>--nice-base</code> (default <code>1rem</code>), with
+        <code>line-height</code> driven by <code>--nice-line-height</code>. Inline <code>code</code> picks up a tinted
+        background that adapts to whichever colour context the block is rendered in.</p>
+
+    <p>A second paragraph — because one is rarely enough to establish rhythm. Notice the space before the next
+        heading: <code>.flow</code>'s heading exception adds <code>--flow-heading-extra</code> of air on top of the
+        base gap for any heading that follows another element.</p>
+
+    <h2>A secondary heading</h2>
+
+    <p>Secondary headings introduce major shifts in topic. They carry about the weight of a chapter subsection.
+        Visit <a href="#">another link</a> to exercise the focus ring — which uses <code>--nice-color-link</code> so
+        it stays on-brand regardless of background.</p>
+
+    <p>A second paragraph under h2 gives the section room to breathe. At this level the heading is doing a lot of
+        visual work, so generous space afterwards lets the eye adjust before settling into the body copy.</p>
+
+    <h3>A tertiary heading</h3>
+
+    <p>Tertiary headings handle subsections within a longer piece. At this depth, the heading announces a shift
+        without demanding attention.</p>
+
+    <p>A second paragraph at this depth demonstrates body rhythm — adjacent paragraphs sit <code>--flow-spacing</code>
+        apart (the base gap), notably tighter than the space before a heading.</p>
+
+    <h4>A quaternary heading</h4>
+
+    <p>Quaternary headings sit at <code>--text-xl</code>. Still distinct from body copy, but part of the article
+        rather than crowning it.</p>
+
+    <p>A follow-up paragraph gives the h4 some content to anchor. At this depth the heading is mostly structural —
+        a navigation aid for long-form writing rather than a display moment.</p>
+
+    <h5>A fifth-level heading</h5>
+
+    <p>h5 sits at <code>--text-lg</code> — close to body size, distinguished mostly by weight and font-family.</p>
+
+    <p>The second paragraph under h5 reads almost identically in size to the heading itself, so the visual hierarchy
+        leans hard on the bold weight and heading font to do the distinguishing.</p>
+
+    <h6>A sixth-level heading</h6>
+
+    <p>h6 is body-sized — weight alone does the distinguishing at the deepest heading tier.</p>
+
+    <p>A closing paragraph at h6 depth. With body text and h6 at the same size, the only visual cue separating them
+        is the heading's bolder weight and slightly tightened tracking.</p>
+
+    <h3>Inline semantics</h3>
+
+    <p>The module renders <strong>strong emphasis</strong> with extra weight and the heading colour, plus
+        <em>italic emphasis</em>, <small>small print at <code>--text-sm</code></small>, and superscript / subscript:
+        E = mc<sup>2</sup>, H<sub>2</sub>O. Abbreviations like <abbr title="Cascading Style Sheets">CSS</abbr> get a
+        dotted underline on hover.</p>
+
+    <p>Keyboard input: press <kbd>⌘</kbd>&nbsp;<kbd>K</kbd> to open the command palette. Sample output uses the
+        monospace face: <samp>→ 200 OK</samp>.</p>
+
+    <h3>Lists</h3>
+
+    <p>Unordered and ordered lists, with nested children. Inter-item spacing uses <code>flex</code> + <code>gap</code>
+        for clean margin-free stacking.</p>
+
+    <ul>
+        <li>First item in an unordered list</li>
+        <li>Second item, slightly longer to show how multi-line list items wrap and breathe</li>
+        <li>Third item with nested children:
+            <ul>
+                <li>A nested item — disc becomes circle</li>
+                <li>Another nested item
+                    <ul>
+                        <li>And one level deeper — circle becomes square</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Fourth item back at the top level</li>
+    </ul>
+
+    <ol>
+        <li>First step in a process</li>
+        <li>Second step, with more detail to show how numbered items handle wrapping</li>
+        <li>Third and final step</li>
+    </ol>
+
+    <h3>Definition lists</h3>
+
+    <dl>
+        <dt>Measure</dt>
+        <dd>The length of a line of type, typically between 45 and 75 characters for comfortable reading.</dd>
+        <dt>Leading</dt>
+        <dd>The vertical space between lines of type, usually expressed as a multiple of the font size.</dd>
+        <dt>Tracking</dt>
+        <dd>The horizontal space applied uniformly across a run of characters — distinct from kerning.</dd>
+    </dl>
+
+    <h3>Blockquote</h3>
+
+    <p>A paragraph leads into the quote. Block quotes sit between paragraphs with their own visual weight — a left
+        border and muted italic body distinguishes them from the surrounding copy without demanding attention.</p>
+
+    <blockquote>
+        <p>Typography is the craft of endowing human language with a durable visual form. It is the most important
+            part of graphic design — because it is the one part that readers actually read. — Robert Bringhurst</p>
+    </blockquote>
+
+    <p>And a paragraph follows the quote, returning to the body rhythm. Notice that <code>--flow-block-extra</code>
+        pushes the quote away from both adjacent elements so it reads as a distinct beat.</p>
+
+    <h3>Code block</h3>
+
+    <p>Code blocks carry a tinted background and tighter line-height, sitting as visual objects within the flowing
+        text. They should feel solid without overwhelming the surrounding prose.</p>
+
+    <pre><code>// A code block for longer snippets
+function greet(name) {
+    return `Hello, ${name}`;
+}
+
+greet("World");</code></pre>
+
+    <p>A paragraph afterwards demonstrates how the rhythm picks up on the other side of the code block. Inline
+        <code>code</code> references within body text keep the tinted-background treatment at a smaller scale.</p>
+
+    <h3>Horizontal rule</h3>
+
+    <p>A hairline rule marks a stronger break than a heading would — useful for separating distinct sections within a
+        long article or marking the end of a thought.</p>
+
+    <hr>
+
+    <p>And life continues after the rule. The generous margin above and below gives the break genuine visual weight
+        without a heavy line doing the work.</p>
+
+    <h3>Table</h3>
+
+    <p>Tables render full-width, sized slightly smaller than body copy so dense data fits the measure without
+        wrapping prematurely. The header row is anchored with a thicker bottom border; body rows separated by
+        hairline rules.</p>
+
+    <table>
+        <thead>
+            <tr><th>Column one</th><th>Column two</th><th>Column three</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Cell content</td><td>More cell content</td><td>Even more</td></tr>
+            <tr><td>Second row</td><td>Second row data</td><td>Final cell</td></tr>
+            <tr><td>Third row</td><td>More data</td><td>Last value</td></tr>
+        </tbody>
+    </table>
+
+    <p>Tables benefit from the same breathing room that blockquotes and code blocks get — the extra space prevents
+        the dense grid from colliding with the surrounding paragraphs.</p>
+
+    <h3>Figure</h3>
+
+    <p>Figures bundle an image, diagram, or embed together with a caption. The caption sits tightly under its figure
+        and reads as a secondary voice — smaller, muted, centred.</p>
+
+    <figure>
+        <svg viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder figure" style="width:100%;height:auto;display:block;border-radius:4px;">
+            <rect width="800" height="360" fill="#d4d4d4"></rect>
+        </svg>
+        <figcaption>Figure 1. A placeholder illustration, captioned below at <code>--text-sm</code>.</figcaption>
+    </figure>
+
+    <p>A closing paragraph returns to the body rhythm after the figure, completing the visual pattern: block element
+        bracketed by text on either side, with extra air contributed by <code>--flow-block-extra</code> on top of the
+        base gap.</p>
+
+{% endset %}
+
+
+{% block body %}
+
+<div class="grid grid-cols-2">
+
+    <div class="bg-white p-8">
+        <div class="nice flow">
+            {{ content|raw }}
+        </div>
+    </div>
+
+    <div class="bg-black p-8">
+        <div class="nice nice-white flow">
+            {{ content|raw }}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

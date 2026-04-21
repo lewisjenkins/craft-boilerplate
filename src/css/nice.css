@@ -1,0 +1,336 @@
+/* ==========================================================================
+   nice.css
+   Opinionated typography for long-form / CMS-rendered content.
+   --------------------------------------------------------------------------
+
+   USAGE
+       <div class="nice">
+           {{ entry.body|raw }}
+       </div>
+
+   Pair with .flow (see flow.css) for vertical rhythm:
+       <div class="nice flow">…</div>
+
+   Variants:
+       .nice-sm / .nice-lg / .nice-xl — rescale the whole module (remap --nice-base)
+       .nice-white                    — remap colour tokens for dark backgrounds
+
+   --------------------------------------------------------------------------
+
+   ARCHITECTURE
+
+   1. Em-scoped scale
+      --text-* tokens are redefined locally inside .nice as em values, so
+      any Tailwind text-* utility nested in .nice picks up the module's
+      scale AND automatically rescales with --nice-base. Heading sizes
+      (--text-lg through --text-9xl) are ratio-driven via pow().
+
+   2. Line-height curve
+      Body tier (xs/sm/base) = --nice-line-height. Display tier uses a
+      quadratic decay:  1 + leading-offset / pow(ratio, 2 × step). Tightens
+      automatically as --nice-ratio steepens — no hand-tuning per size.
+
+   3. Fallback-at-use-site for overrides
+      Every knob is a var(--nice-*, default) reference. Override from
+      design.css at :root (for global) or .nice (for scoped).
+
+   4. Naming conventions
+      --nice-color-*             shared semantic colour slots (body, heading,
+                                 link, muted, border, code-bg)
+      --nice-{element}-{prop}    element-specific overrides (lead-color,
+                                 h1-size, h1-weight, table-cell-padding)
+
+   5. Three knobs drive the scale
+      --nice-base            outer anchor (rem, pairs with fluid root)
+      --nice-ratio           modular scale step (1.2 = Minor Third default)
+      --nice-leading-offset  decay constant for display-tier line-heights
+
+   All other knobs are cosmetic overrides — see design.css for the full
+   reference list.
+   ========================================================================== */
+
+
+:root {
+    --nice-base: 1rem;
+    --nice-ratio: 1.2;
+    --nice-leading-offset: 0.6;
+}
+
+@layer components {
+
+    .nice {
+        font-family: var(--nice-font-body, ui-sans-serif, system-ui, sans-serif);
+        font-size: var(--nice-base);
+        line-height: var(--nice-line-height, 1.6);
+        color: var(--nice-color-body, inherit);
+        
+        --text-xs--line-height:   var(--nice-line-height, 1.6);
+        --text-sm--line-height:   var(--nice-line-height, 1.6);
+        --text-base--line-height: var(--nice-line-height, 1.6);
+        --text-lg--line-height:   calc(1 + var(--nice-leading-offset) / pow(var(--nice-ratio), 1));
+        --text-xl--line-height:   calc(1 + var(--nice-leading-offset) / pow(var(--nice-ratio), 2));
+        --text-2xl--line-height:  calc(1 + var(--nice-leading-offset) / pow(var(--nice-ratio), 4));
+        --text-3xl--line-height:  calc(1 + var(--nice-leading-offset) / pow(var(--nice-ratio), 6));
+        --text-4xl--line-height:  calc(1 + var(--nice-leading-offset) / pow(var(--nice-ratio), 8));
+        --text-5xl--line-height:  calc(1 + var(--nice-leading-offset) / pow(var(--nice-ratio), 10));
+        --text-6xl--line-height:  calc(1 + var(--nice-leading-offset) / pow(var(--nice-ratio), 12));
+        --text-7xl--line-height:  calc(1 + var(--nice-leading-offset) / pow(var(--nice-ratio), 14));
+        --text-8xl--line-height:  calc(1 + var(--nice-leading-offset) / pow(var(--nice-ratio), 16));
+        --text-9xl--line-height:  calc(1 + var(--nice-leading-offset) / pow(var(--nice-ratio), 18));
+
+        --text-xs:   0.75em;
+        --text-sm:   0.875em;
+        --text-base: 1em;
+        --text-lg:   calc(1em * pow(var(--nice-ratio), 0.5));
+        --text-xl:   calc(1em * pow(var(--nice-ratio), 1));
+        --text-2xl:  calc(1em * pow(var(--nice-ratio), 2));
+        --text-3xl:  calc(1em * pow(var(--nice-ratio), 3));
+        --text-4xl:  calc(1em * pow(var(--nice-ratio), 4));
+        --text-5xl:  calc(1em * pow(var(--nice-ratio), 5));
+        --text-6xl:  calc(1em * pow(var(--nice-ratio), 6));
+        --text-7xl:  calc(1em * pow(var(--nice-ratio), 7));
+        --text-8xl:  calc(1em * pow(var(--nice-ratio), 8));
+        --text-9xl:  calc(1em * pow(var(--nice-ratio), 9));
+    }
+
+    .nice h1, .nice h2, .nice h3, .nice h4, .nice h5, .nice h6 {
+        font-family: var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif));
+        font-weight: var(--nice-heading-weight, 700);
+        letter-spacing: var(--nice-heading-tracking, -0.01em);
+        text-wrap: var(--nice-heading-wrap, balance);
+        color: var(--nice-color-heading, inherit);
+    }
+
+    .nice h1 {
+        font-size: var(--nice-h1-size, var(--text-4xl));
+        line-height: var(--nice-h1-line-height, var(--text-4xl--line-height));
+        font-weight: var(--nice-h1-weight, var(--nice-heading-weight, 700));
+        font-family: var(--nice-h1-font, var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif)));
+    }
+
+    .nice h2 {
+        font-size: var(--nice-h2-size, var(--text-3xl));
+        line-height: var(--nice-h2-line-height, var(--text-3xl--line-height));
+        font-weight: var(--nice-h2-weight, var(--nice-heading-weight, 700));
+        font-family: var(--nice-h2-font, var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif)));
+    }
+
+    .nice h3 {
+        font-size: var(--nice-h3-size, var(--text-2xl));
+        line-height: var(--nice-h3-line-height, var(--text-2xl--line-height));
+        font-weight: var(--nice-h3-weight, var(--nice-heading-weight, 700));
+        font-family: var(--nice-h3-font, var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif)));
+    }
+
+    .nice h4 {
+        font-size: var(--nice-h4-size, var(--text-xl));
+        line-height: var(--nice-h4-line-height, var(--text-xl--line-height));
+        font-weight: var(--nice-h4-weight, var(--nice-heading-weight, 700));
+        font-family: var(--nice-h4-font, var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif)));
+    }
+
+    .nice h5 {
+        font-size: var(--nice-h5-size, var(--text-lg));
+        line-height: var(--nice-h5-line-height, var(--text-lg--line-height));
+        font-weight: var(--nice-h5-weight, var(--nice-heading-weight, 700));
+        font-family: var(--nice-h5-font, var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif)));
+    }
+
+    .nice h6 {
+        font-size: var(--nice-h6-size, var(--text-base));
+        line-height: var(--nice-h6-line-height, var(--text-base--line-height));
+        font-weight: var(--nice-h6-weight, var(--nice-heading-weight, 700));
+        font-family: var(--nice-h6-font, var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif)));
+    }
+
+    .nice p.lead {
+        font-size: var(--nice-lead-size, var(--text-xl));
+        line-height: var(--nice-lead-line-height, var(--text-xl--line-height));
+        font-weight: var(--nice-lead-weight, inherit);
+        color: var(--nice-lead-color, inherit);
+    }
+
+    .nice p {
+        text-wrap: var(--nice-body-wrap, pretty);
+    }
+
+    .nice a {
+        color: var(--nice-color-link, currentColor);
+        text-decoration: underline;
+        text-underline-offset: 0.15em;
+        text-decoration-thickness: 0.05em;
+        transition: text-decoration-thickness 120ms ease;
+    }
+
+    .nice a:hover {
+        text-decoration-thickness: 0.12em;
+    }
+
+    .nice a:focus-visible {
+        outline: 0.125em solid var(--nice-color-link, currentColor);
+        outline-offset: 0.15em;
+        border-radius: 0.125em;
+        text-decoration-thickness: 0.12em;
+    }
+
+    .nice strong {
+        font-weight: var(--nice-strong-weight, 600);
+        color: var(--nice-strong-color, var(--nice-color-heading, inherit));
+    }
+
+    .nice em {
+        font-style: italic;
+    }
+
+    .nice small {
+        font-size: var(--text-sm);
+    }
+
+    .nice sub,
+    .nice sup {
+        font-size: 0.75em;
+        line-height: 0;
+    }
+
+    .nice abbr[title] {
+        text-decoration: underline dotted;
+        text-underline-offset: 0.15em;
+        cursor: help;
+    }
+
+    .nice kbd {
+        font-family: var(--nice-font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+        font-size: 0.85em;
+        padding: 0.1em 0.4em;
+        background: var(--nice-color-code-bg, color-mix(in oklab, currentColor 10%, transparent));
+        border: 1px solid var(--nice-color-border, color-mix(in oklab, currentColor 25%, transparent));
+        border-bottom-width: 0.15em;
+        border-radius: 0.25em;
+    }
+
+    .nice samp {
+        font-family: var(--nice-font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+        font-size: 0.9em;
+    }
+
+    .nice code {
+        font-family: var(--nice-font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+        font-size: 0.9em;
+        padding: 0.15em 0.35em;
+        background: var(--nice-color-code-bg, color-mix(in oklab, currentColor 10%, transparent));
+        border-radius: 0.25em;
+    }
+
+    .nice blockquote {
+        padding-left: var(--nice-blockquote-padding, 1em);
+        border-left: 0.1875em solid var(--nice-color-border, color-mix(in oklab, currentColor 25%, transparent));
+        color: var(--nice-color-muted, color-mix(in oklab, currentColor 70%, transparent));
+        font-style: italic;
+    }
+
+    .nice hr {
+        border: 0;
+        border-top: 1px solid var(--nice-color-border, color-mix(in oklab, currentColor 25%, transparent));
+    }
+
+    .nice pre {
+        padding: 1em 1.25em;
+        background: var(--nice-color-code-bg, color-mix(in oklab, currentColor 10%, transparent));
+        border-radius: 0.375em;
+        overflow-x: auto;
+        font-size: 0.9em;
+        line-height: 1.5;
+    }
+
+    .nice pre code {
+        background: none;
+        padding: 0;
+        font-size: inherit;
+        border-radius: 0;
+    }
+
+    .nice ul,
+    .nice ol {
+        display: flex;
+        flex-direction: column;
+        gap: var(--nice-li-spacing, 0.5em);
+        padding-left: var(--nice-list-indent, 1.5em);
+    }
+
+    .nice ul       { list-style-type: disc; }
+    .nice ul ul    { list-style-type: circle; }
+    .nice ul ul ul { list-style-type: square; }
+    .nice ol       { list-style-type: decimal; }
+
+    .nice li::marker {
+        color: var(--nice-color-muted, color-mix(in oklab, currentColor 70%, transparent));
+    }
+
+    .nice li > ul,
+    .nice li > ol {
+        margin-top: var(--nice-nested-list-spacing, 0.5em);
+    }
+
+    .nice dt {
+        font-weight: var(--nice-dt-weight, 600);
+        color: var(--nice-color-heading, inherit);
+    }
+
+    .nice dd {
+        padding-left: var(--nice-list-indent, 1.5em);
+    }
+
+    .nice dt + dd {
+        margin-top: var(--nice-dd-spacing, 0.25em);
+    }
+
+    .nice dd + dt {
+        margin-top: var(--nice-dl-pair-spacing, 1em);
+    }
+
+    .nice table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: var(--text-sm);
+    }
+
+    .nice thead {
+        border-bottom: 0.125em solid var(--nice-color-border, color-mix(in oklab, currentColor 25%, transparent));
+    }
+
+    .nice th,
+    .nice td {
+        padding: var(--nice-table-cell-padding, 0.6em 0.8em);
+        text-align: left;
+        vertical-align: top;
+    }
+
+    .nice tbody tr + tr {
+        border-top: 1px solid var(--nice-color-border, color-mix(in oklab, currentColor 25%, transparent));
+    }
+
+    .nice th {
+        font-weight: var(--nice-table-header-weight, 600);
+        color: var(--nice-color-heading, inherit);
+    }
+
+    .nice img,
+    .nice video {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        border-radius: var(--nice-media-radius, 0.375em);
+    }
+
+    .nice figcaption {
+        margin-top: var(--nice-figcaption-margin, 0.5em);
+        font-size: var(--text-sm);
+        color: var(--nice-color-muted, color-mix(in oklab, currentColor 70%, transparent));
+        text-align: var(--nice-figcaption-align, center);
+    }
+
+    .nice-sm { --nice-base: 0.875rem; }
+    .nice-lg { --nice-base: 1.125rem; }
+    .nice-xl { --nice-base: 1.25rem;  }
+
+}

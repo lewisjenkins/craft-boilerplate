@@ -1,0 +1,63 @@
+/* ==========================================================================
+   flow.css
+   Vertical rhythm for any container — independent of .nice.
+   --------------------------------------------------------------------------
+
+   USAGE
+       <div class="flow">…any HTML…</div>
+
+   Compose with .nice for opinionated typography + rhythm:
+       <div class="nice flow">…</div>
+
+   --------------------------------------------------------------------------
+
+   HOW IT WORKS
+
+   1. Base rhythm via flex + gap
+      .flow becomes a column flex container; direct children sit
+      --flow-spacing apart. Uniform and predictable.
+
+   2. Additive margins for asymmetry
+      Headings get --flow-heading-extra margin-top when they follow another
+      element. Blockquotes, pre, hr, table, figure get --flow-block-extra
+      on both sides. These stack on top of the base gap — the knobs are
+      "additional space", not totals.
+
+   3. Why not just margins?
+      For homogeneous uniform spacing, flex + gap is cleaner than an owl
+      selector. The asymmetric exceptions (headings, blocks) then only need
+      to express the *difference* from the base rhythm.
+
+   4. Scoped to direct children
+      Rules use `.flow > *` so nested containers inside .flow don't have
+      their own children regoverned by the outer .flow. Keeps composition
+      predictable.
+
+   See design.css for the full knob reference.
+   ========================================================================== */
+
+
+:root {
+    --flow-spacing:       1.5em;
+    --flow-heading-extra: 1.5em;
+    --flow-block-extra:   0.75em;
+}
+
+@layer components {
+
+    .flow {
+        display: flex;
+        flex-direction: column;
+        gap: var(--flow-spacing);
+    }
+
+    .flow > * + :is(h1, h2, h3, h4, h5, h6) {
+        margin-top: var(--flow-heading-extra);
+    }
+
+    .flow > * + :is(blockquote, pre, hr, table, figure),
+    .flow > :is(blockquote, pre, hr, table, figure) + * {
+        margin-top: var(--flow-block-extra);
+    }
+
+}

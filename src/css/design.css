@@ -87,9 +87,11 @@
    --nice-lead-color:       inherit;
 
    ── Inline ──────────────────────────────────────────────────────────────
-   --nice-color-link:    currentColor;
-   --nice-strong-color:  var(--nice-color-heading);
-   --nice-strong-weight: 600;
+   --nice-color-link:     currentColor;
+   --nice-strong-color:   var(--nice-color-heading);
+   --nice-strong-weight:  600;
+   --nice-color-mark-bg:    color-mix(in oklab, currentColor 15%, transparent);
+   --nice-color-mark-color: inherit;
 
    ── Borders, muted, code background ─────────────────────────────────────
    --nice-color-border:  color-mix(in oklab, currentColor 25%, transparent);
@@ -112,6 +114,10 @@
 
    ── Blockquote ──────────────────────────────────────────────────────────
    --nice-blockquote-padding: 1em;
+
+   ── Details / summary ───────────────────────────────────────────────────
+   --nice-summary-weight:        600;
+   --nice-summary-open-spacing:  0.5em;    — gap below summary when details is open
 
    ── Media ───────────────────────────────────────────────────────────────
    --nice-media-radius:      0.375em;

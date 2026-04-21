@@ -63,7 +63,8 @@
     <p>The module renders <strong>strong emphasis</strong> with extra weight and the heading colour, plus
         <em>italic emphasis</em>, <small>small print at <code>--text-sm</code></small>, and superscript / subscript:
         E = mc<sup>2</sup>, H<sub>2</sub>O. Abbreviations like <abbr title="Cascading Style Sheets">CSS</abbr> get a
-        dotted underline on hover.</p>
+        dotted underline on hover, and <mark>highlighted passages</mark> use a tinted background that adapts to the
+        surrounding colour context rather than falling back to browser-default yellow.</p>
 
     <p>Keyboard input: press <kbd>⌘</kbd>&nbsp;<kbd>K</kbd> to open the command palette. Sample output uses the
         monospace face: <samp>→ 200 OK</samp>.</p>
@@ -133,6 +134,27 @@ greet("World");</code></pre>
 
     <p>A paragraph afterwards demonstrates how the rhythm picks up on the other side of the code block. Inline
         <code>code</code> references within body text keep the tinted-background treatment at a smaller scale.</p>
+
+    <h3>Disclosure</h3>
+
+    <p>The <code>details</code> and <code>summary</code> elements give you a native disclosure widget — no JavaScript,
+        keyboard-accessible by default. The summary reads as a clickable heading; expanding reveals the wrapped
+        content.</p>
+
+    <details>
+        <summary>What's inside a modular scale?</summary>
+        <p>A modular scale is a sequence of sizes derived from a single ratio. Here the ratio is
+            <code>--nice-ratio</code> (default <code>1.2</code>, a Minor Third). Each heading level multiplies body
+            size by a power of the ratio, so the whole typographic system rescales coherently when you change one
+            number.</p>
+    </details>
+
+    <details open>
+        <summary>A second disclosure, pre-expanded</summary>
+        <p>When <code>details</code> is open, <code>--nice-summary-open-spacing</code> puts a small gap between the
+            summary and its content so the expansion reads as intentional rather than crowded. Focus the summary with
+            the keyboard to see the outline ring, which matches the anchor focus treatment.</p>
+    </details>
 
     <h3>Horizontal rule</h3>
 

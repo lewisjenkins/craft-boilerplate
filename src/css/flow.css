@@ -51,13 +51,16 @@
         gap: var(--flow-spacing);
     }
 
-    .flow > * + :is(h1, h2, h3, h4, h5, h6) {
-        margin-top: var(--flow-heading-extra);
+    .flow > * + :where(blockquote, pre, hr, table, figure),
+    .flow > :where(blockquote, pre, hr, table, figure) + * {
+        margin-top: var(--flow-block-extra);
     }
 
-    .flow > * + :is(blockquote, pre, hr, table, figure),
-    .flow > :is(blockquote, pre, hr, table, figure) + * {
-        margin-top: var(--flow-block-extra);
+    /* Heading rule comes after the block rule so that "heading after block"
+       (e.g. <blockquote> followed by <h2>) wins --flow-heading-extra on the
+       source-order tie-break. Don't reorder without updating this logic. */
+    .flow > * + :where(h1, h2, h3, h4, h5, h6) {
+        margin-top: var(--flow-heading-extra);
     }
 
 }

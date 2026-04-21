@@ -45,6 +45,11 @@
       --nice-ratio           modular scale step (1.2 = Minor Third default)
       --nice-leading-offset  decay constant for display-tier line-heights
 
+   6. Zero-specificity descendants
+      All element-targeting rules are wrapped in :where() so any component
+      class nested inside .nice can win by source order, not by fighting
+      specificity. Same pattern as Tailwind's preflight.
+
    All other knobs are cosmetic overrides — see design.css for the full
    reference list.
    ========================================================================== */
@@ -63,7 +68,7 @@
         font-size: var(--nice-base);
         line-height: var(--nice-line-height, 1.6);
         color: var(--nice-color-body, inherit);
-        
+
         --text-xs--line-height:   var(--nice-line-height, 1.6);
         --text-sm--line-height:   var(--nice-line-height, 1.6);
         --text-base--line-height: var(--nice-line-height, 1.6);
@@ -93,7 +98,7 @@
         --text-9xl:  calc(1em * pow(var(--nice-ratio), 9));
     }
 
-    .nice h1, .nice h2, .nice h3, .nice h4, .nice h5, .nice h6 {
+    .nice :where(h1, h2, h3, h4, h5, h6) {
         font-family: var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif));
         font-weight: var(--nice-heading-weight, 700);
         letter-spacing: var(--nice-heading-tracking, -0.01em);
@@ -101,60 +106,60 @@
         color: var(--nice-color-heading, inherit);
     }
 
-    .nice h1 {
+    .nice :where(h1) {
         font-size: var(--nice-h1-size, var(--text-4xl));
         line-height: var(--nice-h1-line-height, var(--text-4xl--line-height));
         font-weight: var(--nice-h1-weight, var(--nice-heading-weight, 700));
         font-family: var(--nice-h1-font, var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif)));
     }
 
-    .nice h2 {
+    .nice :where(h2) {
         font-size: var(--nice-h2-size, var(--text-3xl));
         line-height: var(--nice-h2-line-height, var(--text-3xl--line-height));
         font-weight: var(--nice-h2-weight, var(--nice-heading-weight, 700));
         font-family: var(--nice-h2-font, var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif)));
     }
 
-    .nice h3 {
+    .nice :where(h3) {
         font-size: var(--nice-h3-size, var(--text-2xl));
         line-height: var(--nice-h3-line-height, var(--text-2xl--line-height));
         font-weight: var(--nice-h3-weight, var(--nice-heading-weight, 700));
         font-family: var(--nice-h3-font, var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif)));
     }
 
-    .nice h4 {
+    .nice :where(h4) {
         font-size: var(--nice-h4-size, var(--text-xl));
         line-height: var(--nice-h4-line-height, var(--text-xl--line-height));
         font-weight: var(--nice-h4-weight, var(--nice-heading-weight, 700));
         font-family: var(--nice-h4-font, var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif)));
     }
 
-    .nice h5 {
+    .nice :where(h5) {
         font-size: var(--nice-h5-size, var(--text-lg));
         line-height: var(--nice-h5-line-height, var(--text-lg--line-height));
         font-weight: var(--nice-h5-weight, var(--nice-heading-weight, 700));
         font-family: var(--nice-h5-font, var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif)));
     }
 
-    .nice h6 {
+    .nice :where(h6) {
         font-size: var(--nice-h6-size, var(--text-base));
         line-height: var(--nice-h6-line-height, var(--text-base--line-height));
         font-weight: var(--nice-h6-weight, var(--nice-heading-weight, 700));
         font-family: var(--nice-h6-font, var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif)));
     }
 
-    .nice p.lead {
+    .nice :where(p.lead) {
         font-size: var(--nice-lead-size, var(--text-xl));
         line-height: var(--nice-lead-line-height, var(--text-xl--line-height));
         font-weight: var(--nice-lead-weight, inherit);
         color: var(--nice-lead-color, inherit);
     }
 
-    .nice p {
+    .nice :where(p) {
         text-wrap: var(--nice-body-wrap, pretty);
     }
 
-    .nice a {
+    .nice :where(a) {
         color: var(--nice-color-link, currentColor);
         text-decoration: underline;
         text-underline-offset: 0.15em;
@@ -162,43 +167,49 @@
         transition: text-decoration-thickness 120ms ease;
     }
 
-    .nice a:hover {
+    .nice :where(a:hover) {
         text-decoration-thickness: 0.12em;
     }
 
-    .nice a:focus-visible {
+    .nice :where(a:focus-visible) {
         outline: 0.125em solid var(--nice-color-link, currentColor);
         outline-offset: 0.15em;
         border-radius: 0.125em;
         text-decoration-thickness: 0.12em;
     }
 
-    .nice strong {
+    .nice :where(strong) {
         font-weight: var(--nice-strong-weight, 600);
         color: var(--nice-strong-color, var(--nice-color-heading, inherit));
     }
 
-    .nice em {
+    .nice :where(em) {
         font-style: italic;
     }
 
-    .nice small {
+    .nice :where(small) {
         font-size: var(--text-sm);
     }
 
-    .nice sub,
-    .nice sup {
+    .nice :where(sub, sup) {
         font-size: 0.75em;
         line-height: 0;
     }
 
-    .nice abbr[title] {
+    .nice :where(abbr[title]) {
         text-decoration: underline dotted;
         text-underline-offset: 0.15em;
         cursor: help;
     }
 
-    .nice kbd {
+    .nice :where(mark) {
+        background: var(--nice-color-mark-bg, color-mix(in oklab, currentColor 15%, transparent));
+        color: var(--nice-color-mark-color, inherit);
+        padding: 0.1em 0.2em;
+        border-radius: 0.15em;
+    }
+
+    .nice :where(kbd) {
         font-family: var(--nice-font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
         font-size: 0.85em;
         padding: 0.1em 0.4em;
@@ -208,12 +219,12 @@
         border-radius: 0.25em;
     }
 
-    .nice samp {
+    .nice :where(samp) {
         font-family: var(--nice-font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
         font-size: 0.9em;
     }
 
-    .nice code {
+    .nice :where(code) {
         font-family: var(--nice-font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
         font-size: 0.9em;
         padding: 0.15em 0.35em;
@@ -221,19 +232,19 @@
         border-radius: 0.25em;
     }
 
-    .nice blockquote {
+    .nice :where(blockquote) {
         padding-left: var(--nice-blockquote-padding, 1em);
         border-left: 0.1875em solid var(--nice-color-border, color-mix(in oklab, currentColor 25%, transparent));
         color: var(--nice-color-muted, color-mix(in oklab, currentColor 70%, transparent));
         font-style: italic;
     }
 
-    .nice hr {
+    .nice :where(hr) {
         border: 0;
         border-top: 1px solid var(--nice-color-border, color-mix(in oklab, currentColor 25%, transparent));
     }
 
-    .nice pre {
+    .nice :where(pre) {
         padding: 1em 1.25em;
         background: var(--nice-color-code-bg, color-mix(in oklab, currentColor 10%, transparent));
         border-radius: 0.375em;
@@ -242,87 +253,99 @@
         line-height: 1.5;
     }
 
-    .nice pre code {
+    .nice :where(pre code) {
         background: none;
         padding: 0;
         font-size: inherit;
         border-radius: 0;
     }
 
-    .nice ul,
-    .nice ol {
+    .nice :where(summary) {
+        cursor: pointer;
+        font-weight: var(--nice-summary-weight, 600);
+        color: var(--nice-color-heading, inherit);
+    }
+
+    .nice :where(summary:focus-visible) {
+        outline: 0.125em solid var(--nice-color-link, currentColor);
+        outline-offset: 0.15em;
+        border-radius: 0.125em;
+    }
+
+    .nice :where(details[open] > summary) {
+        margin-bottom: var(--nice-summary-open-spacing, 0.5em);
+    }
+
+    .nice :where(ul, ol) {
         display: flex;
         flex-direction: column;
         gap: var(--nice-li-spacing, 0.5em);
         padding-left: var(--nice-list-indent, 1.5em);
     }
 
-    .nice ul       { list-style-type: disc; }
-    .nice ul ul    { list-style-type: circle; }
-    .nice ul ul ul { list-style-type: square; }
-    .nice ol       { list-style-type: decimal; }
+    .nice :where(ul)       { list-style-type: disc; }
+    .nice :where(ul ul)    { list-style-type: circle; }
+    .nice :where(ul ul ul) { list-style-type: square; }
+    .nice :where(ol)       { list-style-type: decimal; }
 
-    .nice li::marker {
+    .nice :where(li)::marker {
         color: var(--nice-color-muted, color-mix(in oklab, currentColor 70%, transparent));
     }
 
-    .nice li > ul,
-    .nice li > ol {
+    .nice :where(li > ul, li > ol) {
         margin-top: var(--nice-nested-list-spacing, 0.5em);
     }
 
-    .nice dt {
+    .nice :where(dt) {
         font-weight: var(--nice-dt-weight, 600);
         color: var(--nice-color-heading, inherit);
     }
 
-    .nice dd {
+    .nice :where(dd) {
         padding-left: var(--nice-list-indent, 1.5em);
     }
 
-    .nice dt + dd {
+    .nice :where(dt + dd) {
         margin-top: var(--nice-dd-spacing, 0.25em);
     }
 
-    .nice dd + dt {
+    .nice :where(dd + dt) {
         margin-top: var(--nice-dl-pair-spacing, 1em);
     }
 
-    .nice table {
+    .nice :where(table) {
         width: 100%;
         border-collapse: collapse;
         font-size: var(--text-sm);
     }
 
-    .nice thead {
+    .nice :where(thead) {
         border-bottom: 0.125em solid var(--nice-color-border, color-mix(in oklab, currentColor 25%, transparent));
     }
 
-    .nice th,
-    .nice td {
+    .nice :where(th, td) {
         padding: var(--nice-table-cell-padding, 0.6em 0.8em);
-        text-align: left;
+        text-align: start;
         vertical-align: top;
     }
 
-    .nice tbody tr + tr {
+    .nice :where(tbody tr + tr) {
         border-top: 1px solid var(--nice-color-border, color-mix(in oklab, currentColor 25%, transparent));
     }
 
-    .nice th {
+    .nice :where(th) {
         font-weight: var(--nice-table-header-weight, 600);
         color: var(--nice-color-heading, inherit);
     }
 
-    .nice img,
-    .nice video {
+    .nice :where(img, video) {
         display: block;
         max-width: 100%;
         height: auto;
         border-radius: var(--nice-media-radius, 0.375em);
     }
 
-    .nice figcaption {
+    .nice :where(figcaption) {
         margin-top: var(--nice-figcaption-margin, 0.5em);
         font-size: var(--text-sm);
         color: var(--nice-color-muted, color-mix(in oklab, currentColor 70%, transparent));

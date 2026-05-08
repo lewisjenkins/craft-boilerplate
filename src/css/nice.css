@@ -228,7 +228,7 @@
     .nice :where(blockquote) {
         padding-left: 1em;
         border-left: 0.1875em solid var(--nice-color-border, color-mix(in oklab, currentColor 20%, transparent));
-        color: var(--nice-color-muted, color-mix(in oklab, currentColor 70%, transparent));
+        color: var(--nice-color-muted, color-mix(in oklab, currentColor 80%, transparent));
         font-style: italic;
     }
 
@@ -285,7 +285,7 @@
     .nice.nice-lists :where(ol)       { list-style-type: decimal; }
 
     .nice.nice-lists :where(li)::marker {
-        color: var(--nice-color-muted, color-mix(in oklab, currentColor 70%, transparent));
+        color: var(--nice-color-muted, color-mix(in oklab, currentColor 80%, transparent));
     }
 
     .nice.nice-lists :where(li > ul, li > ol) {
@@ -344,7 +344,7 @@
     .nice :where(figcaption) {
         margin-top: 0.5em;
         font-size: var(--text-sm);
-        color: var(--nice-color-muted, color-mix(in oklab, currentColor 70%, transparent));
+        color: var(--nice-color-muted, color-mix(in oklab, currentColor 80%, transparent));
         text-align: var(--nice-figcaption-align, center);
     }
 

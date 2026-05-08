@@ -3,12 +3,12 @@
     .twitterCreator(false)
 -%}
 
-{% block seomatic %}
+{%- block seomatic %}
     {%- do seomatic.meta
         .seoTitle(siteName)
         .seoDescription('Replace this with a one-sentence description of the site.')
     -%}
-{% endblock %}
+{% endblock -%}
 
 <!DOCTYPE html>
 <html lang="en-GB">

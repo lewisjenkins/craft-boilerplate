@@ -130,6 +130,19 @@ New typography variants belong in `design.css`, following the `.nice-white` patt
 3. **Chrome via `_layouts/header.twig` and `_layouts/footer.twig`.** They live in `_layouts/` (not `_partials/`) because they're page-chrome that the layout orchestrates, not reusable content fragments. `_partials/` is reserved for content/component partials (icons, cards, image macros) when those exist.
 4. **`index.twig` is intentionally minimal** — it's the production homepage placeholder, with an empty `{% block content %}`. Visit `/kitchen-sink` directly in dev to see the typography system.
 
+### SEOmatic + the `seomatic` block override pattern
+
+`nystudio107/craft-seomatic` is installed by `install.sh` and is part of the boilerplate. `base.twig` calls `seomatic.meta` directly, so removing the plugin will fatal the templates.
+
+Per-page title/description go inside a `{% block seomatic %}` override in the child template — **not** as top-level `{% do seomatic.meta %}` calls. Why this matters: top-level calls in a child template run *before* the parent's top-level calls, so the parent silently overwrites the child. The block pattern reverses the order — the child's block content runs when the parent reaches `{% block seomatic %}`, after the parent's invariants.
+
+Layout in `base.twig`:
+
+- **Outside the block** — site-wide invariants like `.siteNamePosition('none')` and `.twitterCreator(false)`. Set once, never overridden per page.
+- **Inside `{% block seomatic %}`** — the per-page knobs (`seoTitle`, `seoDescription`) with sensible defaults (site name, placeholder description). Children replace the block to set their own.
+
+See `templates/kitchen-sink.twig` for the override shape.
+
 ---
 
 ## ✎ REPLACE FREELY — design defaults

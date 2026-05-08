@@ -1,5 +1,7 @@
 {% extends "_layouts/base.twig" %}
 
+{% import '_macros/image.twig' as image %}
+
 {% block seomatic %}
     {%- do seomatic.meta
         .seoTitle('Kitchen Sink')
@@ -196,8 +198,13 @@ greet("World");</code></pre>
     <p>Figures bundle an image, diagram, or embed together with a caption. The caption sits tightly under its figure
         and reads as a secondary voice — smaller, muted, centred.</p>
 
-    <figure>
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='360' viewBox='0 0 800 360'%3E%3Crect width='800' height='360' fill='%23d4d4d4'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23737373' font-family='sans-serif' font-size='32'%3EPlaceholder 800 × 360%3C/text%3E%3C/svg%3E" alt="Placeholder figure">
+    <figure class="aspect-video relative">
+        {{ image.img('https://placehold.co/1200x800/orange/white/png', {
+            fit: 'crop', width: 1194, height: 671
+        }, {
+            alt: 'Placeholder figure',
+            class: 'absolute inset-0 w-full h-full object-cover'
+        }) }}
         <figcaption>Figure 1. A placeholder illustration, captioned below at <code>--text-sm</code>. The image picks up the <code>border-radius: 0.375em</code> and <code>max-width: 100%</code> from <code>.nice</code>'s <code>img</code> rule.</figcaption>
     </figure>
 

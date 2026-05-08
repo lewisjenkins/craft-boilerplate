@@ -21,6 +21,10 @@ templates/
         base.twig       — base layout: inlines build.css, skip link, orchestrates chrome + main
         header.twig     — site header landmark
         footer.twig     — site footer landmark
+    _macros/
+        image.twig      — image transform + <img> rendering helpers (Cloudflare Images)
+    _partials/
+        breadcrumbs.twig — auto-derived breadcrumb trail from the request URI
     _build.css          — symlink → ../web/dist/build.css (so Twig's source() can read the build output)
     index.twig          — homepage placeholder (empty content block)
     kitchen-sink.twig   — typography showcase (light + dark side-by-side)
@@ -127,8 +131,40 @@ New typography variants belong in `design.css`, following the `.nice-white` patt
 
 1. **Skip link first.** A `<a href="#main">Skip to main content</a>` is the first focusable element — invisible by default (`sr-only`), visible top-left when keyboard-focused. Required for keyboard accessibility once nav exists.
 2. **`<main id="main" tabindex="-1">` wraps page content.** The `tabindex="-1"` lets focus actually land on `<main>` when the skip link is activated. The `id` matches the skip link target. Don't change either without changing both.
-3. **Chrome via `_layouts/header.twig` and `_layouts/footer.twig`.** They live in `_layouts/` (not `_partials/`) because they're page-chrome that the layout orchestrates, not reusable content fragments. `_partials/` is reserved for content/component partials (icons, cards, image macros) when those exist.
-4. **`index.twig` is intentionally minimal** — it's the production homepage placeholder, with an empty `{% block content %}`. Visit `/kitchen-sink` directly in dev to see the typography system.
+3. **Chrome via `_layouts/header.twig` and `_layouts/footer.twig`.** They live in `_layouts/` (not `_partials/`) because they're page-chrome that the layout orchestrates, not reusable content fragments. `_partials/` is reserved for `{% include %}`-style content/component partials (icons, cards) when those exist; `{% macro %}`-style modules go in `_macros/` (see below).
+4. **Breadcrumbs sit inside `<main>` before `{% block content %}`.** `base.twig` includes `_partials/breadcrumbs.twig` automatically on every page. The partial self-derives crumbs from the request URI and renders nothing on the homepage or when no path segments resolve to Craft entries — so it's safe to leave wired up unconditionally.
+5. **`index.twig` is intentionally minimal** — it's the production homepage placeholder, with an empty `{% block content %}`. Visit `/kitchen-sink` directly in dev to see the typography system.
+
+### Image transforms via Cloudflare Images (`_macros/image.twig`)
+
+Images are rendered through `_macros/image.twig`, which exposes two entry points:
+
+- `image.transform(src, options)` — returns the transformed URL (for meta tags, `og:image`, CSS backgrounds, etc.)
+- `image.img(src, options, attrs)` — returns a full `<img …>` with the transformed URL plus `width`/`height`/`loading` defaults
+
+In non-dev environments, same-origin asset URLs are routed through Cloudflare Images via `/cdn-cgi/image/<params>/<src>`. In dev, or when the `src` doesn't start with `PRIMARY_SITE_URL` (external URLs, `data:` URIs, placeholders), the transform branch is skipped and the source URL passes through untouched.
+
+Two consequences worth knowing:
+
+- **`width`/`height` in `options` are the *output* size after transform**, not a claim about the source asset's intrinsic dimensions. Source assets are intentionally often larger or a different ratio — Cloudflare's transform does the crop/resize. Don't try to make these match the file you're feeding in.
+- **Above-the-fold images** (hero, LCP) need `loading: 'eager'` + `decoding: 'sync'` (and `fetchpriority: 'high'` on the actual LCP) passed through `attrs`. The macro defaults to `loading: 'lazy'` + browser-default async decode, which is correct for everything else. Setting `decoding: 'sync'` on a lazy image forces decode to block paint when it eventually loads — don't.
+
+Conventional import alias is `as image`:
+
+```twig
+{% import '_macros/image.twig' as image %}
+```
+
+The macro file's own doc block uses `as ui` in its example — historical artefact; new callers should use `image` for consistency with the kitchen sink and existing code.
+
+### `_macros/` vs `_partials/` — different mechanisms, different homes
+
+Twig's `{% macro %}` and `{% include %}` look superficially similar but behave very differently:
+
+- **`{% include %}` partials** are rendered as templates with the full calling scope available, plus access to globals (`craft.*`, the current request, etc.). Stored in `_partials/`. Use for chrome and self-contained UI blocks that don't need a function-call interface — included by name once per page or per region. `breadcrumbs.twig` is the canonical example: takes no arguments, derives everything from globals (`craft.app.request.pathInfo`, `craft.entries`), and renders nothing on pages with no resolved crumbs.
+- **`{% macro %}` modules** are imported namespaces with no implicit scope access — every input arrives as an explicit argument. Stored in `_macros/`. Use for pure transformations and utilities (image rendering, URL generation, formatting) where explicit inputs are clearer than ambient state. `image.twig` is the canonical example.
+
+Rule of thumb: is this **chrome** (a named UI block, no inputs or only globals) or a **function** (takes a thing, returns a transformation of it)? Chrome → `_partials/`. Function → `_macros/`. A partial that should have been a macro will silently break the moment a caller's variable name overlaps with one the partial uses; a macro that should have been a partial will be tedious to call because every global has to be threaded through arguments.
 
 ### SEOmatic + the `seomatic` block override pattern
 

@@ -1,0 +1,62 @@
+{# ---------------------------------------------------------------------------
+   image
+   Image URL transform + <img> rendering helpers. Transforms route through
+   Cloudflare Images (/cdn-cgi/image/…) in non-dev environments; dev and
+   external URLs pass through untouched.
+
+   Two entry points:
+
+   • ui.transform(src, options)       — transformed URL only (meta tags,
+                                        backgrounds, og:image, etc.)
+   • ui.img(src, options, attrs)      — full <img …> with width/height +
+                                        loading defaults applied
+
+   Usage:
+       {% import '_macros/image.twig' as ui %}
+
+       {{ ui.img('/assets/home/hero.jpg?v=1', {
+           fit: 'crop',
+           width: 1536,
+           height: 614
+       }, {
+           alt: 'River view at dusk',
+           class: 'absolute w-full h-full object-cover'
+       }) }}
+
+   Options — Cloudflare Images transform params. Common ones:
+       fit         default 'scale-down'
+       format      default 'auto'  (AVIF/WebP per browser)
+       width       intrinsic width in CSS px (also sets the HTML attr)
+       height      intrinsic height in CSS px (also sets the HTML attr)
+       quality, gravity, sharpen, blur, dpr
+   See: https://developers.cloudflare.com/images/transform-images/
+
+   Above-the-fold images should pass `loading: 'eager'` + `decoding: 'sync'`
+   (and `fetchpriority: 'high'` on the LCP). The default `loading: 'lazy'`
+   plus browser-default async decode is correct for everything else —
+   setting `sync` on a lazy image forces decode to block paint when it
+   eventually loads, which you don't want.
+---------------------------------------------------------------------------- #}
+
+{% macro transform(src, options = {}) -%}
+    {%- set src = siteUrl(src) -%}
+    {%- if getenv('CRAFT_ENVIRONMENT') == 'dev'
+        or not (src starts with getenv('PRIMARY_SITE_URL')) -%}
+        {{- src -}}
+    {%- else -%}
+        {%- set opts = { fit: 'scale-down', format: 'auto' }|merge(options) -%}
+        {%- set params = opts|map((v, k) => k ~ '=' ~ v)|join(',') -%}
+        {{- siteUrl(['cdn-cgi/image', params, src]|join('/')) -}}
+    {%- endif -%}
+{%- endmacro %}
+
+{% macro img(src, options = {}, attrs = {}) -%}
+    {% import _self as self %}
+    {{ tag('img', {
+        src: self.transform(src, options),
+        width: options.width ?? null,
+        height: options.height ?? null,
+        loading: 'lazy',
+        alt: ''
+    }|merge(attrs)) }}
+{%- endmacro %}

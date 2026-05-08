@@ -1,0 +1,45 @@
+{# ---------------------------------------------------------------------------
+   breadcrumbs
+   Auto-derived from the current request URI. Walks each path segment, looks
+   up the matching Craft entry by URI, and uses its title. Renders nothing
+   on the homepage or when no segments resolve to entries.
+---------------------------------------------------------------------------- #}
+
+{% set path = craft.app.request.pathInfo %}
+
+{% if path %}
+    {% set segments = path|split('/') %}
+    {% set crumbs = [] %}
+    {% set acc = '' %}
+    {% for seg in segments %}
+        {% set acc = acc ? acc ~ '/' ~ seg : seg %}
+        {% set crumbEntry = craft.entries.uri(acc).one() %}
+        {% if crumbEntry %}
+            {% set crumbs = crumbs|merge([{
+                label: crumbEntry.title,
+                url: crumbEntry.url,
+                current: loop.last,
+            }]) %}
+        {% endif %}
+    {% endfor %}
+
+    {% if crumbs is not empty %}
+    <div class="bg-slate-200 [--nice-color-body:var(--color-black)] [--nice-color-link:var(--nice-color-body)]">
+        <nav aria-label="Breadcrumb" class="contain px-8 py-4 sm:px-12">
+            <ol class="flex flex-wrap gap-2 items-center">
+                <li class="nice text-sm"><a href="/">Home</a></li>
+                {% for c in crumbs %}
+                    <li class="nice text-sm" aria-hidden="true">›</li>
+                    <li class="nice text-sm">
+                        {% if c.current %}
+                            <span aria-current="page">{{ c.label }}</span>
+                        {% else %}
+                            <a href="{{ c.url }}">{{ c.label }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ol>
+        </nav>
+    </div>
+    {% endif %}
+{% endif %}

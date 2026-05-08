@@ -43,6 +43,10 @@ for line in '/node_modules'; do
     grep -qxF "$line" .gitignore 2>/dev/null || echo "$line" >> .gitignore
 done
 
+echo "→ Installing SEOmatic…"
+composer require nystudio107/craft-seomatic --quiet
+php craft plugin/install seomatic
+
 echo "→ Installing npm deps…"
 npm install --silent
 

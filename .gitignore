@@ -6,18 +6,18 @@
 
 !/.gitignore
 !/CLAUDE.md
+!/CLAUDE.dist.md
 !/install.sh
 !/package.json
 !/README.md
 !/src
 !/templates
 
-# Track web/dist/fonts/ (self-hosted font files) and web/dist/build.css (compiled CSS,
-# inlined into the HTML head via templates/_build.css symlink). Everything else in
-# web/ is local-only.
+# Track web/dist/fonts/ (self-hosted font files travel with the boilerplate).
+# Everything else in web/ — including the compiled web/dist/build.css — is
+# local-only; run `npm run css` to (re)build.
 !/web
 /web/*
 !/web/dist
 /web/dist/*
 !/web/dist/fonts
-!/web/dist/build.css

@@ -1,6 +1,8 @@
 /* ==========================================================================
    fonts.css
-   Self-hosted Work Sans (variable font, 100–900 wght + italic).
+   Self-hosted @font-face declarations: Work Sans (variable, 100–900 wght +
+   italic), Prompt 700, Quicksand (variable, 300–700), and a Material
+   Symbols Outlined subset.
    --------------------------------------------------------------------------
 
    Files live in web/dist/fonts/. url() paths are absolute (/dist/fonts/…)

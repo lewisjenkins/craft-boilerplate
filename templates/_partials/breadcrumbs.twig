@@ -18,7 +18,6 @@
             {% set crumbs = crumbs|merge([{
                 label: crumbEntry.title,
                 url: crumbEntry.url,
-                current: loop.last,
             }]) %}
         {% endif %}
     {% endfor %}
@@ -31,7 +30,7 @@
                 {% for c in crumbs %}
                     <li class="nice text-sm" aria-hidden="true">›</li>
                     <li class="nice text-sm">
-                        {% if c.current %}
+                        {% if loop.last %}
                             <span aria-current="page">{{ c.label }}</span>
                         {% else %}
                             <a href="{{ c.url }}">{{ c.label }}</a>

@@ -6,15 +6,15 @@
 
    Two entry points:
 
-   • ui.transform(src, options)       — transformed URL only (meta tags,
+   • image.transform(src, options)       — transformed URL only (meta tags,
                                         backgrounds, og:image, etc.)
-   • ui.img(src, options, attrs)      — full <img …> with width/height +
+   • image.img(src, options, attrs)      — full <img …> with width/height +
                                         loading defaults applied
 
    Usage:
-       {% import '_macros/image.twig' as ui %}
+       {% import '_macros/image.twig' as image %}
 
-       {{ ui.img('/assets/home/hero.jpg?v=1', {
+       {{ image.img('/assets/home/hero.jpg?v=1', {
            fit: 'crop',
            width: 1536,
            height: 614

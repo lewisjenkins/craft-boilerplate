@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 #
 # craft-boilerplate installer
-# Overlays the boilerplate's src/, templates/, package.json, CLAUDE.md
-# onto a fresh Craft CMS install. Run from the project root after
-# `php craft install`.
+# Overlays the boilerplate's src/, templates/, package.json, and
+# web/dist/fonts/ onto a fresh Craft CMS install, drops in CLAUDE.dist.md
+# as CLAUDE.md (only if one doesn't already exist), then installs SEOmatic
+# and builds the CSS. Run from the project root after `php craft install`.
 #
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/lewisjenkins/craft-boilerplate/main/install.sh | bash
@@ -28,9 +29,15 @@ cp -R "$TMP/src" .
 cp -R "$TMP/templates/." templates/
 cp "$TMP/package.json" .
 
-# Note: CLAUDE.md is intentionally NOT copied. It documents this boilerplate's
-# own architecture and conventions; consuming projects should write their own
-# (or omit it) describing their specific architecture.
+# CLAUDE.dist.md is the consuming-project version of CLAUDE.md (boilerplate-meta
+# stripped). The boilerplate's own CLAUDE.md is intentionally NOT copied — it
+# documents this boilerplate's own architecture, not your project's.
+# Don't clobber an existing CLAUDE.md if the project already has one.
+if [[ -f CLAUDE.md ]]; then
+    echo "  ↳ CLAUDE.md already exists — leaving it alone (boilerplate version: CLAUDE.dist.md in the repo)"
+else
+    cp "$TMP/CLAUDE.dist.md" CLAUDE.md
+fi
 
 # Self-hosted woff2 font files referenced by fonts.css and preloaded in base.twig.
 mkdir -p web/dist/fonts

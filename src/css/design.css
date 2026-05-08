@@ -1,6 +1,19 @@
 @theme {
-    --font-sans:    "Work Sans", system-ui, sans-serif;
-    --font-display: "Work Sans", Georgia, serif;
+    --font-sans:         "Work Sans", system-ui, sans-serif;
+    --font-display:      "Work Sans", system-ui, sans-serif;
+    --font-hero-sans:    "Quicksand", system-ui, sans-serif;
+    --font-hero-display: "Prompt", system-ui, sans-serif;
+
+    --color-primary:   var(--color-sky-700);
+    --color-secondary: var(--color-yellow-600);
+
+    --color-success: var(--color-green-600);
+    --color-warning: var(--color-amber-500);
+    --color-danger:  var(--color-red-600);
+    --color-info:    var(--color-blue-500);
+
+    --color-button:       var(--color-primary);
+    --color-button-hover: color-mix(in oklab, var(--color-primary), black 10%);
 }
 
 :root {
@@ -11,12 +24,8 @@
     --nice-color-heading: var(--color-gray-950);
     --nice-lead-color:    var(--nice-color-heading);
     --nice-color-link:    var(--color-blue-400);
-    --nice-color-border:  color-mix(in oklab, currentColor 20%, transparent);
-    --nice-color-muted:   color-mix(in oklab, currentColor 70%, transparent);
-    --nice-color-code-bg: color-mix(in oklab, currentColor 8%, transparent);
 
-    --nice-h1-weight: 900;
-
+    --nice-h1-weight:   900;
     --nice-lead-weight: 500;
 }
 
@@ -26,106 +35,54 @@
     --nice-lead-color:    currentColor;
     --nice-color-link:    currentColor;
     --nice-color-border:  color-mix(in oklab, currentColor 50%, transparent);
-    --nice-color-muted:   color-mix(in oklab, currentColor 70%, transparent);
     --nice-color-code-bg: color-mix(in oklab, currentColor 20%, transparent);
 }
 
+/* Per-font content-area: (fontBoundingBoxAscent + fontBoundingBoxDescent) / fontSize, in em.
+   Sits on the .font-* utility so the value cascades — descendants reading
+   var(--content-area) resolve to the right length for whichever font is in play.
+   Use as line-height (or in calc with padding) to fit text backgrounds tight to
+   the glyph box instead of the loose line-height box.
 
-/* ============================================================================
-   Available overrides — copy into :root (or .nice / a variant) to override.
-   Values shown are the module defaults.
+   To measure a font's ratio, paste in DevTools on a page where the font has loaded:
 
-   ── Scale ───────────────────────────────────────────────────────────────
-   --nice-base:           1rem;
-   --nice-ratio:          1.2;
-   --nice-leading-offset: 0.6;
+   async function getContentAreaRatio(fontFamily, fontSize = 100) {
+       await document.fonts.ready;
+       const ctx = document.createElement('canvas').getContext('2d');
+       ctx.font = `${fontSize}px ${fontFamily}`;
+       const m = ctx.measureText('M');
+       return (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent) / fontSize;
+   }
+   getContentAreaRatio('Work Sans').then(console.log);   // 1.17
+   getContentAreaRatio('Quicksand').then(console.log);   // 1.25
+   getContentAreaRatio('Prompt').then(console.log);      // 1.51
+*/
 
-   ── Fonts ───────────────────────────────────────────────────────────────
-   --nice-font-body:    ui-sans-serif, system-ui, sans-serif;
-   --nice-font-heading: var(--nice-font-body);
-   --nice-font-mono:    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+.font-sans {
+    --content-area:  1.17em;
+    --highlight-px:  0.2em;
+    --highlight-py:  0.1em;
+    --highlight-gap: 0.1em;
+}
 
-   ── Body ────────────────────────────────────────────────────────────────
-   --nice-color-body:  inherit;
-   --nice-line-height: 1.6;
-   --nice-body-wrap:   pretty;
+.font-display {
+    --content-area:  1.17em;
+    --highlight-px:  0.2em;
+    --highlight-py:  0.1em;
+    --highlight-gap: 0.1em;
+}
 
-   ── Headings (shared) ───────────────────────────────────────────────────
-   --nice-color-heading:    inherit;
-   --nice-heading-weight:   700;
-   --nice-heading-tracking: -0.01em;
-   --nice-heading-wrap:     balance;
+.font-hero-sans {
+    --content-area:  1.25em;
+    --highlight-px:  0.2em;
+    --highlight-py:  0.1em;
+    --highlight-gap: 0.1em;
+}
 
-   ── Per-heading size / line-height (falls back to --text-{N} tokens) ────
-   --nice-h1-size: var(--text-4xl);   --nice-h1-line-height: var(--text-4xl--line-height);
-   --nice-h2-size: var(--text-3xl);   --nice-h2-line-height: var(--text-3xl--line-height);
-   --nice-h3-size: var(--text-2xl);   --nice-h3-line-height: var(--text-2xl--line-height);
-   --nice-h4-size: var(--text-xl);    --nice-h4-line-height: var(--text-xl--line-height);
-   --nice-h5-size: var(--text-lg);    --nice-h5-line-height: var(--text-lg--line-height);
-   --nice-h6-size: var(--text-base);  --nice-h6-line-height: var(--text-base--line-height);
+.font-hero-display {
+    --content-area:  1.51em;
+    --highlight-px:  0.2em;
+    --highlight-py:  0.1em;
+    --highlight-gap: 0.1em;
+}
 
-   ── Per-heading weight (falls back to --nice-heading-weight) ────────────
-   --nice-h1-weight: 700;
-   --nice-h2-weight: 700;
-   --nice-h3-weight: 700;
-   --nice-h4-weight: 700;
-   --nice-h5-weight: 700;
-   --nice-h6-weight: 700;
-
-   ── Per-heading font (falls back to --nice-font-heading) ────────────────
-   --nice-h1-font: var(--nice-font-heading);
-   --nice-h2-font: var(--nice-font-heading);
-   --nice-h3-font: var(--nice-font-heading);
-   --nice-h4-font: var(--nice-font-heading);
-   --nice-h5-font: var(--nice-font-heading);
-   --nice-h6-font: var(--nice-font-heading);
-
-   ── Lead paragraph ──────────────────────────────────────────────────────
-   --nice-lead-size:        var(--text-xl);
-   --nice-lead-line-height: var(--text-xl--line-height);
-   --nice-lead-weight:      inherit;
-   --nice-lead-color:       inherit;
-
-   ── Inline ──────────────────────────────────────────────────────────────
-   --nice-color-link:     currentColor;
-   --nice-strong-color:   var(--nice-color-heading);
-   --nice-strong-weight:  600;
-   --nice-color-mark-bg:    color-mix(in oklab, currentColor 15%, transparent);
-   --nice-color-mark-color: inherit;
-
-   ── Borders, muted, code background ─────────────────────────────────────
-   --nice-color-border:  color-mix(in oklab, currentColor 25%, transparent);
-   --nice-color-muted:   color-mix(in oklab, currentColor 70%, transparent);
-   --nice-color-code-bg: color-mix(in oklab, currentColor 10%, transparent);
-
-   ── Lists ───────────────────────────────────────────────────────────────
-   --nice-list-indent:         1.5em;
-   --nice-li-spacing:          0.5em;
-   --nice-nested-list-spacing: 0.5em;
-
-   ── Definition lists ────────────────────────────────────────────────────
-   --nice-dt-weight:       600;
-   --nice-dl-pair-spacing: 1em;
-   --nice-dd-spacing:      0.25em;
-
-   ── Tables ──────────────────────────────────────────────────────────────
-   --nice-table-cell-padding:  0.6em 0.8em;
-   --nice-table-header-weight: 600;
-
-   ── Blockquote ──────────────────────────────────────────────────────────
-   --nice-blockquote-padding: 1em;
-
-   ── Details / summary ───────────────────────────────────────────────────
-   --nice-summary-weight:        600;
-   --nice-summary-open-spacing:  0.5em;    — gap below summary when details is open
-
-   ── Media ───────────────────────────────────────────────────────────────
-   --nice-media-radius:      0.375em;
-   --nice-figcaption-margin: 0.5em;
-   --nice-figcaption-align:  center;
-
-   ── Flow rhythm (flow.css) ──────────────────────────────────────────────
-   --flow-spacing:       1.5em;     — base gap between children
-   --flow-heading-extra: 1.5em;     — added before headings
-   --flow-block-extra:   0.75em;    — added before/after blockquote, pre, hr, table, figure
-============================================================================ */

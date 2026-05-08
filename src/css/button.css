@@ -1,0 +1,62 @@
+/* ==========================================================================
+   button.css
+   Single .btn class — uppercase CTA-style button.
+   --------------------------------------------------------------------------
+
+   USAGE
+       <a href="…" class="btn">Get started</a>
+       <button class="btn">Submit</button>
+
+   Inline icon (sized to 1.5em with a collapsed line-box so it doesn't enlarge
+   the button height):
+       <a href="…" class="btn">
+           Learn more
+           <span class="material-symbols-outlined">arrow_right_alt</span>
+       </a>
+
+   Optional hover-nudge animation — opt in per icon via Tailwind utilities, so
+   it doesn't fire on icons that aren't directional cues:
+       <a href="…" class="btn group">
+           Learn more
+           <span class="material-symbols-outlined transition-transform duration-150 group-hover:translate-x-1">arrow_right_alt</span>
+       </a>
+
+   Brand colour comes from --color-button / --color-button-hover (declared in
+   design.css's @theme). Override at :root or on a scoped variant class to
+   reskin without re-declaring the .btn rule.
+   ========================================================================== */
+
+@layer components {
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        background-color: var(--color-button);
+        color: white;
+        border: none;
+        border-radius: 0.125rem;
+        font-size: 0.875rem;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 150ms ease;
+    }
+
+    .btn:hover {
+        background-color: var(--color-button-hover);
+    }
+
+    .btn:focus-visible {
+        outline: 2px solid var(--color-button);
+        outline-offset: 2px;
+    }
+
+    .btn .material-symbols-outlined {
+        font-size: 1.5em;
+        line-height: 0;
+    }
+}

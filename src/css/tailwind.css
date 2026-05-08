@@ -1,7 +1,10 @@
 @import "tailwindcss" source(none);
 @import "./layout.css";
+@import "./fonts.css";
 @import "./nice.css";
 @import "./flow.css";
+@import "./highlight.css";
+@import "./button.css";
 @import "./design.css";
 
 @source "../../templates/**/*.{twig,html}";

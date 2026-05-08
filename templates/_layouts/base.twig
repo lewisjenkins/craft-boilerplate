@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
     <title>{% block title %}{{ siteName }}{% endblock %}</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preload" as="font" type="font/woff2" href="/dist/fonts/work-sans-latin.woff2?v=1" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/dist/fonts/prompt-latin-700.woff2?v=1" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/dist/fonts/quicksand-latin.woff2?v=1" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/dist/fonts/material-symbols-subset.woff2?v=10" crossorigin>
 
-    {% css '/dist/build.css' %}
+    {% css %}{{ source('_build.css') }}{% endcss %}
 
     {% block head %}{% endblock %}
 </head>
-<body class="font-sans antialiased bg-gray-50">
+<body class="font-sans antialiased bg-gray-50 text-(--nice-color-body)">
 
     <a href="#main"
        class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded focus:bg-slate-900 focus:px-4 focus:py-2 focus:text-white">
@@ -24,7 +25,8 @@
     {% include '_layouts/header.twig' %}
 
     <main id="main" tabindex="-1">
-        {% block body %}{% endblock %}
+        {# {% include '_partials/breadcrumbs.twig' %} #}
+        {% block content %}{% endblock %}
     </main>
 
     {% include '_layouts/footer.twig' %}

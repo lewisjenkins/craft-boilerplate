@@ -192,32 +192,106 @@ greet("World");</code></pre>
         and reads as a secondary voice — smaller, muted, centred.</p>
 
     <figure>
-        <svg viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder figure" style="width:100%;height:auto;display:block;border-radius:4px;">
-            <rect width="800" height="360" fill="#d4d4d4"></rect>
-        </svg>
-        <figcaption>Figure 1. A placeholder illustration, captioned below at <code>--text-sm</code>.</figcaption>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='360' viewBox='0 0 800 360'%3E%3Crect width='800' height='360' fill='%23d4d4d4'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23737373' font-family='sans-serif' font-size='32'%3EPlaceholder 800 × 360%3C/text%3E%3C/svg%3E" alt="Placeholder figure">
+        <figcaption>Figure 1. A placeholder illustration, captioned below at <code>--text-sm</code>. The image picks up the <code>border-radius: 0.375em</code> and <code>max-width: 100%</code> from <code>.nice</code>'s <code>img</code> rule.</figcaption>
     </figure>
 
     <p>A closing paragraph returns to the body rhythm after the figure, completing the visual pattern: block element
         bracketed by text on either side, with extra air contributed by <code>--flow-block-extra</code> on top of the
         base gap.</p>
 
+    <p class="font-display font-bold text-5xl highlight-parent">
+        <span class="highlight bg-red-500/50">This is a headline. there are many like it but this one is mine</span>
+    </p>
+
+    <p class="font-sans text-2xl highlight-parent">
+        <span class="highlight bg-red-500/50">This is a highlighted paragraph of text that spans multiple rows. And this is also a highlighted paragraph of text that spans additional rows.</span>
+    </p>
+
+    <div class="flex gap-4 items-center">
+        <a href="#" class="btn">Get started</a>
+        <a href="#" class="btn group">
+            Learn more
+            <span class="material-symbols-outlined transition-transform duration-150 group-hover:translate-x-1">arrow_right_alt</span>
+        </a>
+    </div>
+
+    <button class="btn self-start">Submit</button>
+
 {% endset %}
 
 
-{% block body %}
+{# Bare-list demo: the same lists/dl markup rendered without .nice-lists, to show
+   the unstyled default. Use semantic <ul>/<ol>/<dl> for nav, breadcrumbs, card
+   grids etc. without override-fighting. #}
+{% set bareLists %}
+
+    <h3>Lists (without <code>.nice-lists</code>)</h3>
+
+    <p>The same markup as above, rendered in a <code>.nice flow</code> container with <code>.nice-lists</code>
+        omitted. No markers, no indent, no flex rhythm — semantic markup only.</p>
+
+    <ul>
+        <li>First item in an unordered list</li>
+        <li>Second item, slightly longer to show how multi-line list items wrap and breathe</li>
+        <li>Third item with nested children:
+            <ul>
+                <li>A nested item</li>
+                <li>Another nested item
+                    <ul>
+                        <li>And one level deeper</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Fourth item back at the top level</li>
+    </ul>
+
+    <ol>
+        <li>First step in a process</li>
+        <li>Second step, with more detail to show how numbered items handle wrapping</li>
+        <li>Third and final step</li>
+    </ol>
+
+    <h3>Definition lists (without <code>.nice-lists</code>)</h3>
+
+    <dl>
+        <dt>Measure</dt>
+        <dd>The length of a line of type, typically between 45 and 75 characters for comfortable reading.</dd>
+        <dt>Leading</dt>
+        <dd>The vertical space between lines of type, usually expressed as a multiple of the font size.</dd>
+        <dt>Tracking</dt>
+        <dd>The horizontal space applied uniformly across a run of characters — distinct from kerning.</dd>
+    </dl>
+
+{% endset %}
+
+
+{% block content %}
 
 <div class="grid grid-cols-2">
 
     <div class="bg-white p-8">
-        <div class="nice flow">
+        <div class="nice nice-lists flow">
             {{ content|raw }}
         </div>
     </div>
 
     <div class="bg-black p-8">
-        <div class="nice nice-white flow">
+        <div class="nice nice-lists nice-white flow">
             {{ content|raw }}
+        </div>
+    </div>
+
+    <div class="bg-white p-8">
+        <div class="nice flow">
+            {{ bareLists|raw }}
+        </div>
+    </div>
+
+    <div class="bg-black p-8">
+        <div class="nice nice-white flow">
+            {{ bareLists|raw }}
         </div>
     </div>
 

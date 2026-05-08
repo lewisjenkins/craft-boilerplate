@@ -10,18 +10,24 @@ README.md               — public-facing repo readme + install instructions
 src/css/
     tailwind.css        — entry/manifest: tailwindcss import, @imports, @source globs
     layout.css          — layout system: breakpoint, .contain, fluid root
+    fonts.css           — self-hosted @font-face declarations (Work Sans, Prompt, Quicksand, Material Symbols)
     nice.css            — typography module (.nice, .nice-sm/lg/xl variants)
-    flow.css            — vertical rhythm module (.flow)
-    design.css          — project tokens (fonts, colour mappings) + .nice-white variant
+    flow.css             — vertical rhythm module (.flow)
+    highlight.css        — inline text highlight chip (.highlight)
+    button.css           — CTA-style .btn (uppercase, brand colour, optional inline icon)
+    design.css           — project tokens (fonts, colours, brand palette, per-font content-area) + .nice-white variant
 templates/
     _layouts/
-        base.twig       — base layout: fonts, build.css link, skip link, orchestrates chrome + main
+        base.twig       — base layout: inlines build.css, skip link, orchestrates chrome + main
         header.twig     — site header landmark
         footer.twig     — site footer landmark
+    _build.css          — symlink → ../web/dist/build.css (so Twig's source() can read the build output)
     index.twig          — homepage; redirects to /kitchen-sink in dev, empty in prod
     kitchen-sink.twig   — typography showcase (light + dark side-by-side)
     404.twig            — page-not-found template
-web/dist/build.css      — compiled output (served via Craft's {% css %} tag from _layouts/base.twig)
+web/dist/
+    build.css           — compiled output (inlined into HTML head via {% css %}{{ source('_build.css') }}{% endcss %})
+    fonts/              — self-hosted woff2 font files referenced by fonts.css
 ```
 
 ## Build
@@ -31,7 +37,10 @@ npm run css        # one-shot, minified
 npm run css:dev    # watch
 ```
 
-Output goes to `web/dist/build.css`. The Twig layout links it as `/dist/build.css`.
+Output goes to `web/dist/build.css`. `base.twig` inlines its contents into the HTML head via the `templates/_build.css` symlink — eliminating the render-blocking external CSS request. Two consequences worth knowing:
+
+- **CSP**: a strict `style-src` policy will block the inline `<style>`. Projects with a tight CSP need `'unsafe-inline'` on `style-src`, or a nonce/hash-based rule.
+- **Symlink fragility**: `templates/_build.css → ../web/dist/build.css` works through git (symlinks are stored portably) and through normal deploy tools, but some pipelines (older rsync configs, certain zip-based deploys, Windows checkouts) don't preserve symlinks. If `source('_build.css')` can't resolve, Twig throws a fatal — there's no graceful no-CSS fallback.
 
 ---
 
@@ -62,30 +71,40 @@ All three live in `layout.css` and use **1536px** as the layout cap. Change one,
 
 The typography system is split into two concerns that can be used independently or together:
 
-- **`.nice`** (`nice.css`) — element typography: font family, sizes, line-heights, colours, link treatment, list markers, blockquote border, code/kbd treatment, table borders, etc. No vertical spacing.
+- **`.nice`** (`nice.css`) — element typography: font family, sizes, line-heights, colours, link treatment, blockquote border, code/kbd treatment, table borders, etc. No vertical spacing. List styling (ul/ol/dl) is opt-in via `.nice-lists` — see below.
 - **`.flow`** (`flow.css`) — vertical rhythm: direct children sit `--flow-spacing` apart via flex + gap; headings get extra top-margin when they follow another element; block elements (blockquote, pre, hr, table, figure) get additional breathing room on both sides.
 
-The typical usage for long-form / CMS-rendered content is both together:
+The typical usage for long-form / CMS-rendered content is all three together:
 
 ```twig
-<div class="nice flow">
+<div class="nice nice-lists flow">
     {{ entry.body|raw }}
 </div>
 ```
 
 For hand-authored sections where you're managing rhythm yourself (flex+gap containers, landing pages), use `.nice` alone and drive spacing with Tailwind utilities on the parent.
 
-**Lead paragraphs** use `<p class="lead">` inside `.nice`. Size defaults to `--text-xl`, colour to `--nice-lead-color`. Override knobs live in `design.css` (see the reference comment at the bottom of that file).
+**`.nice-lists` is opt-in by design.** Plain `.nice` leaves `<ul>`, `<ol>`, and `<dl>` unstyled — no markers, no indent, no flex rhythm — so you can use semantic lists for nav, breadcrumbs, card grids, etc. without override-fighting. Add `.nice-lists` only when the lists inside are prose (CMS body content, kitchen-sink demo).
+
+**Lead paragraphs** use `<p class="lead">` inside `.nice`. Size defaults to `--text-xl`, colour to `--nice-lead-color`. Every knob in the module is exposed as `var(--nice-*, default)` at the use site — override at `:root` in `design.css` for global, or inside a variant class for scoped.
 
 **Size variants** — `.nice-sm`, `.nice-lg`, `.nice-xl` remap `--nice-base`. Because `nice.css` redefines Tailwind's `--text-*` tokens as `em` values and derives heading sizes via `pow(var(--nice-ratio), …)`, everything inside — headings, lead, body, captions, list markers — rescales proportionally.
 
 **Colour variants** — `.nice-white` is the built-in reversed-palette variant (see `design.css`). New variants follow the same pattern: override `--nice-color-*` tokens at the variant class, never re-declare selectors from `nice.css`.
 
-### `nice.css` and `flow.css` are modules — tune via tokens, not selectors
+### `nice.css`, `flow.css`, and `highlight.css` are modules — tune via tokens, not selectors
 
-Every knob is exposed as a `--nice-*` or `--flow-*` custom property with a fallback at the use site. Override those in `design.css` (`:root` for global, inside a variant class for scoped). Do not move core rules out of `nice.css` / `flow.css` into `design.css` — the module files stay focused on the rendering logic.
+Every knob is exposed as a `--nice-*` / `--flow-*` / `--highlight-*` custom property with a fallback at the use site. Override those in `design.css` (`:root` for global, inside a variant class for scoped). Do not move core rules out of the module files into `design.css` — the module files stay focused on the rendering logic.
 
-A reference comment at the bottom of `design.css` lists every available override. Skim it when you need to change something and you're not sure which knob to turn.
+### Highlight component
+
+`.highlight` (in `highlight.css`) is a translucent inline chip behind text — useful for white text on hero images or any pull-quote-ish prominence. It uses `box-decoration-break: clone` so the chip repeats cleanly across wrapped lines. Pair it with `.highlight-parent` on the surrounding block: the parent's line-height is set from `--content-area` (a font-bounding-box ratio per `.font-*` utility in `design.css`) plus `--highlight-py` (a per-font breathing-room nudge, also in `design.css`), and the chip inherits that line-height — so cloned chips on wrapped lines sit flush with no gap. Override `--highlight-bg` on the parent (cascades) or use a Tailwind `bg-*` utility on the span for non-default colour.
+
+### Self-hosted fonts
+
+`fonts.css` declares `@font-face` rules pointing at woff2 files in `web/dist/fonts/`. Variable fonts (Work Sans 100–900, Quicksand 300–700) cover their full weight range from a single file per subset. `unicode-range` subsetting means the browser only downloads the files it actually needs. Material Symbols Outlined is subsetted to the icons listed in the comment block at the top of that section — to add more icons, regenerate the subset via the Google Fonts API.
+
+The `.gitignore` whitelists `web/dist/fonts/` specifically so the woff2 files travel with the boilerplate; everything else under `web/` (including `build.css`) stays local-only.
 
 ### File layering (do not blur)
 
@@ -93,9 +112,12 @@ A reference comment at the bottom of `design.css` lists every available override
 |---|---|---|
 | Entry/manifest | `src/css/tailwind.css` | Tailwind import, `@import` the other files, `@source` globs |
 | Layout system | `src/css/layout.css` (`@theme`, `@utility`, `@layer base`) | Breakpoint, `.contain`, fluid root — all interlocking on 1536px |
+| Fonts | `src/css/fonts.css` | `@font-face` declarations + `.material-symbols-outlined` utility |
 | Typography module | `src/css/nice.css` (`@layer components`) | `.nice` rules: element styling, no margins |
 | Rhythm module | `src/css/flow.css` (`@layer components`) | `.flow` rules: vertical rhythm via flex + gap + additive margins |
-| Project tokens + variants | `src/css/design.css` (`@theme`, `:root`, `.nice-*`) | Fonts, colour mappings, `--nice-*` / `--flow-*` overrides, colour variants |
+| Highlight module | `src/css/highlight.css` (`@layer components`) | `.highlight` rule: inline translucent chip |
+| Button module | `src/css/button.css` (`@layer components`) | `.btn` rule: uppercase CTA-style button, brand-coloured, optional inline icon nudge |
+| Project tokens + variants | `src/css/design.css` (`@theme`, `:root`, `.nice-*`, `.font-*`) | Fonts, colour mappings, brand palette, per-font `--content-area` and `--highlight-py`, `--nice-*` / `--flow-*` overrides, colour variants |
 
 New typography variants belong in `design.css`, following the `.nice-white` pattern — override `--nice-color-*` properties, never re-declare selectors from `nice.css`.
 
@@ -112,9 +134,9 @@ New typography variants belong in `design.css`, following the `.nice-white` patt
 
 ## ✎ REPLACE FREELY — design defaults
 
-- **Fonts.** Currently Work Sans for both body and display. Swap the Google Fonts `<link>` in `templates/_layouts/base.twig` and the `--font-sans` / `--font-display` values in `design.css`'s `@theme`.
-- **Colours.** `--nice-color-link: var(--color-blue-400)` by default. `.nice-white` variant inverts colour tokens for dark backgrounds. Change the `var(--color-*)` references in `design.css` freely — Tailwind picks them up automatically. For brand colours, declare them in `design.css`'s `@theme` so they become both CSS variables and utility classes.
+- **Fonts.** Self-hosted via `fonts.css`. Currently Work Sans (variable, body + display), Prompt 700 (`--font-hero-display`), Quicksand (variable, `--font-hero-sans`), and a Material Symbols subset. To swap fonts: add the woff2 files to `web/dist/fonts/`, add `@font-face` rules to `fonts.css`, update the `--font-*` values in `design.css`'s `@theme`, and update the `--content-area` value on the matching `.font-*` rule (measure via the DevTools snippet in `design.css`'s comment).
+- **Colours.** `--nice-color-link: var(--color-blue-400)` by default. `.nice-white` variant inverts colour tokens for dark backgrounds. Change the `var(--color-*)` references in `design.css` freely — Tailwind picks them up automatically. Brand palette is declared in `design.css`'s `@theme`: `--color-primary`, `--color-secondary` (re-skin slots), `--color-success / -warning / -danger / -info` (semantic-status slots, ready for form validation, alerts, badges), `--color-button` and `--color-button-hover` (consumed by `.btn`). All `@theme` colours auto-emit Tailwind utility classes (`bg-primary`, `text-success`, etc.).
 - **Scale ratio.** `--nice-ratio` defaults to `1.2` (Minor Third). Override on `:root` in `design.css` — the entire heading scale and line-height curve rescale together.
-- **Lead treatment.** `--nice-lead-weight: 500` and `--nice-h1-weight: 900` are set in `design.css`'s `:root`. All per-heading knobs (`--nice-h<N>-weight`, `--nice-h<N>-font`, `--nice-h<N>-size`, `--nice-h<N>-line-height`) are wired up — override any individually without touching the module.
+- **Lead treatment.** `--nice-lead-weight: 500` and `--nice-h1-weight: 900` are set in `design.css`'s `:root`. Per-heading `--nice-h<N>-weight` and `--nice-h<N>-size` knobs are wired up — override any individually without touching the module.
 - **Sample content in `templates/kitchen-sink.twig`.** Demo only — useful for spotting regressions to the typography system (light and dark rendered side-by-side). Delete or move once real components are built. Keep the `<section>` + `<div class="contain …">` + inner `max-w-*` container pattern when building new sections.
 - **New sections / components.** Build with Tailwind utilities directly, or register recurring patterns as `@utility` in `tailwind.css`.

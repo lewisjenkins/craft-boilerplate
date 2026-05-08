@@ -10,13 +10,22 @@ php craft install
 curl -fsSL https://raw.githubusercontent.com/lewisjenkins/craft-boilerplate/main/install.sh | bash
 ```
 
-The final command overlays `src/`, `templates/`, `package.json`, and `CLAUDE.md`, then runs `npm install` and `npm run css`. The new project is ready to develop against — visit `/kitchen-sink` in dev to see the typography system rendered (light and dark side-by-side).
+The final command overlays `src/`, `templates/`, `package.json`, and `web/dist/fonts/` (self-hosted woff2 files), then runs `npm install` and `npm run css`. install.sh self-deletes on success. The new project is ready to develop against — visit `/kitchen-sink` in dev to see the typography system rendered (light and dark side-by-side).
 
 ## What's inside
 
-- **`src/css/`** — Tailwind 4 CLI setup, layout system, typography module (`.nice`), vertical-rhythm module (`.flow`), project design tokens.
-- **`templates/`** — Base layout, header/footer chrome, 404, kitchen-sink demo.
-- **`CLAUDE.md`** — Architectural conventions (Tailwind config, layout cap, `.nice`/`.flow` module rules).
+- **`src/css/`** — Tailwind 4 CLI setup. Modules:
+  - `layout.css` — fluid root + `.contain` + single `sm:` breakpoint, all on a 1536px cap
+  - `fonts.css` — self-hosted `@font-face` rules (Work Sans, Prompt, Quicksand, Material Symbols subset)
+  - `nice.css` — typography module (`.nice`, with `.nice-sm/lg/xl/-white/-lists` variants)
+  - `flow.css` — vertical-rhythm module (`.flow`)
+  - `highlight.css` — translucent inline-text chip (`.highlight`, `.highlight-parent`)
+  - `button.css` — uppercase CTA-style `.btn` with optional inline icon
+  - `design.css` — project tokens: brand palette, semantic-status colours, per-font content-area
+- **`templates/`** — Base layout (with font preloads + inlined CSS), header/footer chrome, 404, kitchen-sink demo, index placeholder.
+- **`web/dist/fonts/`** — woff2 font files referenced by `fonts.css` and preloaded by `base.twig`.
+
+`CLAUDE.md` documents the boilerplate's own architecture and is **not** copied into consuming projects — it's reference material for working on this repo.
 
 ## Development of the boilerplate itself
 

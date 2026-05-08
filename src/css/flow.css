@@ -33,14 +33,14 @@
       their own children regoverned by the outer .flow. Keeps composition
       predictable.
 
-   See design.css for the full knob reference.
+   See the :root block below for the three knobs and their defaults.
    ========================================================================== */
 
 
 :root {
     --flow-spacing:       1.5em;
-    --flow-heading-extra: 1.5em;
-    --flow-block-extra:   0.75em;
+    --flow-heading-extra: 0.25em;
+    --flow-block-extra:   0.25em;
 }
 
 @layer components {

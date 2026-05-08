@@ -1,0 +1,53 @@
+/* ==========================================================================
+   highlight.css
+   Inline text highlight — translucent chip behind text.
+   --------------------------------------------------------------------------
+
+   USAGE
+       <p class="highlight-parent">
+           Plain text <span class="highlight">highlighted text</span> more text.
+       </p>
+
+   Two classes work together:
+     .highlight-parent  on the surrounding block — sets line-height to:
+                            --content-area + 2 × --highlight-py + --highlight-gap
+                        --content-area is the font-bounding-box ratio (set per
+                        .font-* utility in design.css). --highlight-py and
+                        --highlight-gap are also set per-font in design.css.
+     .highlight         on the inline span — translucent chip styling, with
+                        box-decoration-break: clone so it repeats cleanly per
+                        wrapped line. Vertical padding (--highlight-py) extends
+                        the chip's painted background; horizontal padding
+                        (--highlight-px) sits beside the glyphs.
+
+   The chip's painted height is content-area + 2 × --highlight-py; the parent's
+   line-height adds --highlight-gap on top — the difference is the visible gap
+   between cloned chips on wrapped lines.
+
+   To override the chip's background colour, set --highlight-bg on the parent
+   (cascades down) or use a Tailwind bg-* utility on the span itself.
+
+   Knobs (all default 0 / unstyled — design.css sets per-font values):
+       --highlight-bg   background colour                       (default: rgb(0 0 0 / 0.5))
+       --highlight-px   horizontal padding around glyphs        (default: 0)
+       --highlight-py   vertical padding extending the chip     (default: 0)
+       --highlight-gap  extra line-height beyond the painted    (default: 0)
+                        chip — appears as gap between cloned
+                        chips on wrapped lines.
+   ========================================================================== */
+
+@layer components {
+    .highlight {
+        background: var(--highlight-bg, rgb(0 0 0 / 0.5));
+        -webkit-box-decoration-break: clone;
+                box-decoration-break: clone;
+        padding-inline: var(--highlight-px, 0em);
+        padding-block: var(--highlight-py, 0em);
+    }
+}
+
+/* @utility (vs @layer components) so it wins against Tailwind's text-* utilities,
+   which also set line-height. Otherwise text-base etc. on the same element override. */
+@utility highlight-parent {
+    line-height: calc(var(--content-area) + 2 * var(--highlight-py, 0em) + var(--highlight-gap, 0em));
+}

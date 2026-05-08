@@ -11,3 +11,10 @@
 !/README.md
 !/src
 !/templates
+
+# Track web/dist/fonts/ for self-hosted font files (everything else in web/ is local-only)
+!/web
+/web/*
+!/web/dist
+/web/dist/*
+!/web/dist/fonts

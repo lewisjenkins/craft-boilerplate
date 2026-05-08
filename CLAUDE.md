@@ -22,7 +22,7 @@ templates/
         header.twig     — site header landmark
         footer.twig     — site footer landmark
     _build.css          — symlink → ../web/dist/build.css (so Twig's source() can read the build output)
-    index.twig          — homepage; redirects to /kitchen-sink in dev, empty in prod
+    index.twig          — homepage placeholder (empty content block)
     kitchen-sink.twig   — typography showcase (light + dark side-by-side)
     404.twig            — page-not-found template
 web/dist/
@@ -128,7 +128,7 @@ New typography variants belong in `design.css`, following the `.nice-white` patt
 1. **Skip link first.** A `<a href="#main">Skip to main content</a>` is the first focusable element — invisible by default (`sr-only`), visible top-left when keyboard-focused. Required for keyboard accessibility once nav exists.
 2. **`<main id="main" tabindex="-1">` wraps page content.** The `tabindex="-1"` lets focus actually land on `<main>` when the skip link is activated. The `id` matches the skip link target. Don't change either without changing both.
 3. **Chrome via `_layouts/header.twig` and `_layouts/footer.twig`.** They live in `_layouts/` (not `_partials/`) because they're page-chrome that the layout orchestrates, not reusable content fragments. `_partials/` is reserved for content/component partials (icons, cards, image macros) when those exist.
-4. **`index.twig` is intentionally minimal** — it's the production homepage placeholder. In dev, it redirects to `/kitchen-sink` (`{% if craft.app.config.general.devMode %}{% redirect 'kitchen-sink' 302 %}{% endif %}`) so a fresh install lands on the demo. Remove the conditional once real homepage content exists.
+4. **`index.twig` is intentionally minimal** — it's the production homepage placeholder, with an empty `{% block content %}`. Visit `/kitchen-sink` directly in dev to see the typography system.
 
 ---
 

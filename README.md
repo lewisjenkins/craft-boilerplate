@@ -10,7 +10,7 @@ php craft install
 curl -fsSL https://raw.githubusercontent.com/lewisjenkins/craft-boilerplate/main/install.sh | bash
 ```
 
-The final command overlays `src/`, `templates/`, `package.json`, and `web/dist/fonts/` (self-hosted woff2 files), then runs `npm install` and `npm run css`. install.sh self-deletes on success. The new project is ready to develop against — visit `/kitchen-sink` in dev to see the typography system rendered (light and dark side-by-side).
+The final command overlays `src/`, `templates/`, `package.json`, and `web/dist/fonts/` (self-hosted woff2 files), then runs `npm install` and `npm run css`. install.sh self-deletes on success. The new project is ready to develop against — navigate to `/kitchen-sink` to see the typography system rendered (light and dark side-by-side).
 
 ## What's inside
 

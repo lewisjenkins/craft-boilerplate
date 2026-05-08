@@ -12,9 +12,12 @@
 !/src
 !/templates
 
-# Track web/dist/fonts/ for self-hosted font files (everything else in web/ is local-only)
+# Track web/dist/fonts/ (self-hosted font files) and web/dist/build.css (compiled CSS,
+# inlined into the HTML head via templates/_build.css symlink). Everything else in
+# web/ is local-only.
 !/web
 /web/*
 !/web/dist
 /web/dist/*
 !/web/dist/fonts
+!/web/dist/build.css

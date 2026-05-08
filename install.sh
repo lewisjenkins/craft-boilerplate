@@ -39,7 +39,7 @@ cp -R "$TMP/web/dist/fonts/." web/dist/fonts/
 # Append boilerplate's required .gitignore lines (idempotent).
 # Don't copy the boilerplate's own .gitignore — it's a whitelist for
 # this repo's own tracking, not for new projects.
-for line in '/node_modules' '/web/dist/build.css'; do
+for line in '/node_modules'; do
     grep -qxF "$line" .gitignore 2>/dev/null || echo "$line" >> .gitignore
 done
 

@@ -8,7 +8,7 @@ Guidance for Claude Code working in this repository — a Craft CMS 5 project wi
 src/css/
     tailwind.css        — entry/manifest: tailwindcss import, @imports, @source globs
     layout.css          — layout system: breakpoint, .contain, fluid root
-    fonts.css           — self-hosted @font-face declarations (Work Sans, Prompt, Quicksand, Material Symbols)
+    fonts.css           — self-hosted @font-face declarations (Work Sans, Material Symbols)
     nice.css            — typography module (.nice, .nice-sm/lg/xl variants)
     flow.css            — vertical rhythm module (.flow)
     highlight.css       — inline text highlight chip (.highlight)
@@ -16,7 +16,7 @@ src/css/
     design.css          — project tokens (fonts, colours, brand palette, per-font content-area) + .nice-white variant
 templates/
     _layouts/
-        base.twig       — base layout: inlines build.css, skip link, orchestrates chrome + main
+        base.twig       — base layout: font preloads, inlines build.css, skip link, orchestrates chrome + main
         header.twig     — site header landmark
         footer.twig     — site footer landmark
     _macros/
@@ -104,7 +104,7 @@ Every knob is exposed as a `--nice-*` / `--flow-*` / `--highlight-*` custom prop
 
 ### Self-hosted fonts
 
-`fonts.css` declares `@font-face` rules pointing at woff2 files in `web/dist/fonts/`. Variable fonts (Work Sans 100–900, Quicksand 300–700) cover their full weight range from a single file per subset. `unicode-range` subsetting means the browser only downloads the files it actually needs. Material Symbols Outlined is subsetted to the icons listed in the comment block at the top of that section — to add more icons, regenerate the subset via the Google Fonts API.
+`fonts.css` declares `@font-face` rules pointing at woff2 files in `web/dist/fonts/`. Work Sans is a variable font covering 100–900 (plus italic) from a single file per subset. `unicode-range` subsetting means the browser only downloads the files it actually needs. Material Symbols Outlined is subsetted to the icons listed in the comment block at the top of that section — to add more icons, regenerate the subset via the Google Fonts API.
 
 ### File layering (do not blur)
 
@@ -164,7 +164,7 @@ Rule of thumb: is this **chrome** (a named UI block, no inputs or only globals) 
 
 ## ✎ REPLACE FREELY — design defaults
 
-- **Fonts.** Self-hosted via `fonts.css`. Currently Work Sans (variable, body + display), Prompt 700 (`--font-hero-display`), Quicksand (variable, `--font-hero-sans`), and a Material Symbols subset. To swap fonts: add the woff2 files to `web/dist/fonts/`, add `@font-face` rules to `fonts.css`, update the `--font-*` values in `design.css`'s `@theme`, and update the `--content-area` value on the matching `.font-*` rule (measure via the DevTools snippet in `design.css`'s comment).
+- **Fonts.** Self-hosted via `fonts.css`. Currently Work Sans (variable, body + display) and a Material Symbols subset. To swap fonts: add the woff2 files to `web/dist/fonts/`, add `@font-face` rules to `fonts.css`, update the `--font-*` values in `design.css`'s `@theme`, and update the `--content-area` value on the matching `.font-*` rule (measure via the DevTools snippet in `design.css`'s comment).
 - **Colours.** `--nice-color-link: var(--color-sky-700)` by default. `.nice-white` variant inverts colour tokens for dark backgrounds. Change the `var(--color-*)` references in `design.css` freely — Tailwind picks them up automatically. Brand palette is declared in `design.css`'s `@theme`: `--color-primary`, `--color-secondary` (re-skin slots), `--color-success / -warning / -danger / -info` (semantic-status slots, ready for form validation, alerts, badges), `--color-button` and `--color-button-hover` (consumed by `.btn`). All `@theme` colours auto-emit Tailwind utility classes (`bg-primary`, `text-success`, etc.).
 - **Scale ratio.** `--nice-ratio` defaults to `1.2` (Minor Third). Override on `:root` in `design.css` — the entire heading scale and line-height curve rescale together.
 - **Lead treatment.** `--nice-lead-weight: 500` and `--nice-h1-weight: 900` are set in `design.css`'s `:root`. Per-heading `--nice-h<N>-weight` and `--nice-h<N>-size` knobs are wired up — override any individually without touching the module.

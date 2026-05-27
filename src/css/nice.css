@@ -297,10 +297,6 @@
         color: var(--nice-color-heading, inherit);
     }
 
-    .nice.nice-lists :where(dd) {
-        padding-left: var(--nice-list-indent, 1.5em);
-    }
-
     .nice.nice-lists :where(dt + dd) {
         margin-top: var(--nice-dd-spacing, 0.25em);
     }
@@ -338,7 +334,7 @@
         display: block;
         max-width: 100%;
         height: auto;
-        border-radius: var(--nice-media-radius, 0.375em);
+        border-radius: var(--nice-media-radius, 0em);
     }
 
     .nice :where(figcaption) {

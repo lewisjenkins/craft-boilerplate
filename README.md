@@ -25,7 +25,7 @@ The final command overlays `src/`, `templates/`, `package.json`, and `web/dist/f
 - **`templates/`** — Base layout (with font preloads + inlined CSS), header/footer chrome, 404, kitchen-sink demo, index placeholder.
 - **`web/dist/fonts/`** — woff2 font files referenced by `fonts.css` and preloaded by `base.twig`.
 
-`CLAUDE.md` documents this repo's own structure (install flow, whitelist `.gitignore`) and isn't copied into consuming projects. `CLAUDE.dist.md` holds the architectural conventions (Tailwind 4 setup, `.nice` / `.flow`, image macro, SEOmatic pattern, design defaults) — `install.sh` drops it into new projects as their `CLAUDE.md`, but only if one doesn't already exist.
+`CLAUDE.md` documents this repo's own structure (install flow, whitelist `.gitignore`) and isn't copied into consuming projects. `CLAUDE.dist.md` holds the architectural conventions (Tailwind 4 setup, `.nice` / `.flow`, image macro, design defaults) — `install.sh` drops it into new projects as their `CLAUDE.md`, but only if one doesn't already exist.
 
 ## Development of the boilerplate itself
 

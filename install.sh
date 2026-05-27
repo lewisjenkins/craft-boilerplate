@@ -3,8 +3,8 @@
 # craft-boilerplate installer
 # Overlays the boilerplate's src/, templates/, package.json, and
 # web/dist/fonts/ onto a fresh Craft CMS install, drops in CLAUDE.dist.md
-# as CLAUDE.md (only if one doesn't already exist), then installs SEOmatic
-# and builds the CSS. Run from the project root after `php craft install`.
+# as CLAUDE.md (only if one doesn't already exist), then builds the CSS.
+# Run from the project root after `php craft install`.
 #
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/lewisjenkins/craft-boilerplate/main/install.sh | bash
@@ -49,10 +49,6 @@ cp -R "$TMP/web/dist/fonts/." web/dist/fonts/
 for line in '/node_modules'; do
     grep -qxF "$line" .gitignore 2>/dev/null || echo "$line" >> .gitignore
 done
-
-echo "→ Installing SEOmatic…"
-composer require nystudio107/craft-seomatic --quiet
-php craft plugin/install seomatic
 
 echo "→ Installing npm deps…"
 npm install --silent

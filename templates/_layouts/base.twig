@@ -1,14 +1,4 @@
-{%- do seomatic.meta
-    .siteNamePosition('none')
-    .twitterCreator(false)
--%}
-
-{%- block seomatic %}
-    {%- do seomatic.meta
-        .seoTitle(siteName)
-        .seoDescription('Replace this with a one-sentence description of the site.')
-    -%}
-{% endblock -%}
+{% import '_macros/image.twig' as image %}
 
 <!DOCTYPE html>
 <html lang="en-GB">
@@ -18,8 +8,6 @@
     <meta name="format-detection" content="telephone=no">
 
     <link rel="preload" as="font" type="font/woff2" href="/dist/fonts/work-sans-latin.woff2?v=1" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="/dist/fonts/prompt-latin-700.woff2?v=1" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="/dist/fonts/quicksand-latin.woff2?v=1" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="/dist/fonts/material-symbols-subset.woff2?v=10" crossorigin>
 
     {% css %}{{ source('_build.css') }}{% endcss %}
@@ -33,7 +21,9 @@
         Skip to main content
     </a>
 
-    {% include '_layouts/header.twig' %}
+    {% block header %}
+        {% include '_layouts/header.twig' %}
+    {% endblock %}
 
     <main id="main" tabindex="-1">
         {% include '_partials/breadcrumbs.twig' %}

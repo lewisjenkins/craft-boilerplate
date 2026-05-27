@@ -2,13 +2,6 @@
 
 {% import '_macros/image.twig' as image %}
 
-{% block seomatic %}
-    {%- do seomatic.meta
-        .seoTitle('Kitchen Sink')
-        .seoDescription('Typography and component showcase — light and dark variants rendered side-by-side for spotting regressions.')
-    -%}
-{% endblock %}
-
 {# Capture the full showcase once, render it twice. #}
 {% set content %}
 

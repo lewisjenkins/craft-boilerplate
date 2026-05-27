@@ -2,7 +2,7 @@
 
 Guidance for Claude Code working *on* the **craft-boilerplate** repo itself — the canonical Craft CMS 5 boilerplate for new projects. It doubles as a working Craft install (for testing) and the source of truth installed onto fresh projects via `install.sh`.
 
-> **For project / architectural conventions** — Tailwind 4 setup, layout system, typography modules (`.nice` / `.flow`), image macro, breadcrumbs partial, SEOmatic block pattern, design defaults, file layering — see [`CLAUDE.dist.md`](./CLAUDE.dist.md). That file is the canonical record for everything that survives into consuming projects, and is the file you should edit when adding or changing those conventions. This file (`CLAUDE.md`) only documents how the boilerplate itself is structured and distributed.
+> **For project / architectural conventions** — Tailwind 4 setup, layout system, typography modules (`.nice` / `.flow`), image macro, breadcrumbs partial, design defaults, file layering — see [`CLAUDE.dist.md`](./CLAUDE.dist.md). That file is the canonical record for everything that survives into consuming projects, and is the file you should edit when adding or changing those conventions. This file (`CLAUDE.md`) only documents how the boilerplate itself is structured and distributed.
 
 ## Boilerplate-only files
 
@@ -30,14 +30,12 @@ Run from a fresh Craft project root after `php craft install`. The script:
 3. Overlays `src/`, `templates/`, `package.json`, and `web/dist/fonts/`.
 4. Copies `CLAUDE.dist.md` to `CLAUDE.md` *only if* the project doesn't already have a `CLAUDE.md`.
 5. Appends `/node_modules` to `.gitignore` if missing.
-6. Installs SEOmatic via Composer (`nystudio107/craft-seomatic`) and runs `php craft plugin/install seomatic`.
-7. Runs `npm install` + `npm run css`.
-8. Self-deletes if invoked as a local file (no-op when piped via `curl … | bash`).
+6. Runs `npm install` + `npm run css`.
+7. Self-deletes if invoked as a local file (no-op when piped via `curl … | bash`).
 
 Things to know when editing the script:
 
 - **CLAUDE.md is non-clobbering.** Existing project `CLAUDE.md` files are left alone — only the initial install gets the boilerplate version. This is deliberate: consuming projects accrue their own context over time.
-- **SEOmatic install is non-interactive but assumes the DB is ready.** It must run after `php craft install`; there is no fallback if the DB isn't there.
 - **The `.gitignore` append loop is idempotent.** Add new boilerplate-required ignore lines to the `for line in …` loop, not as bare `echo >> .gitignore`.
 
 ## Working on `CLAUDE.dist.md`

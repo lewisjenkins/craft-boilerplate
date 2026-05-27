@@ -160,19 +160,6 @@ Twig's `{% macro %}` and `{% include %}` look superficially similar but behave v
 
 Rule of thumb: is this **chrome** (a named UI block, no inputs or only globals) or a **function** (takes a thing, returns a transformation of it)? Chrome → `_partials/`. Function → `_macros/`. A partial that should have been a macro will silently break the moment a caller's variable name overlaps with one the partial uses; a macro that should have been a partial will be tedious to call because every global has to be threaded through arguments.
 
-### SEOmatic + the `seomatic` block override pattern
-
-`nystudio107/craft-seomatic` is required by `base.twig` — `base.twig` calls `seomatic.meta` directly, so removing the plugin will fatal the templates.
-
-Per-page title/description go inside a `{% block seomatic %}` override in the child template — **not** as top-level `{% do seomatic.meta %}` calls. Why this matters: top-level calls in a child template run *before* the parent's top-level calls, so the parent silently overwrites the child. The block pattern reverses the order — the child's block content runs when the parent reaches `{% block seomatic %}`, after the parent's invariants.
-
-Layout in `base.twig`:
-
-- **Outside the block** — site-wide invariants like `.siteNamePosition('none')` and `.twitterCreator(false)`. Set once, never overridden per page.
-- **Inside `{% block seomatic %}`** — the per-page knobs (`seoTitle`, `seoDescription`) with sensible defaults (site name, placeholder description). Children replace the block to set their own.
-
-See `templates/kitchen-sink.twig` for the override shape.
-
 ---
 
 ## ✎ REPLACE FREELY — design defaults

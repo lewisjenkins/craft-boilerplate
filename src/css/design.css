@@ -1,8 +1,6 @@
 @theme {
-    --font-sans:         "Work Sans", system-ui, sans-serif;
-    --font-display:      "Work Sans", system-ui, sans-serif;
-    --font-hero-sans:    "Quicksand", system-ui, sans-serif;
-    --font-hero-display: "Prompt", system-ui, sans-serif;
+    --font-sans:    "Work Sans", system-ui, sans-serif;
+    --font-display: "Work Sans", system-ui, sans-serif;
 
     --color-primary:   var(--color-sky-700);
     --color-secondary: var(--color-yellow-600);
@@ -54,34 +52,18 @@
        return (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent) / fontSize;
    }
    getContentAreaRatio('Work Sans').then(console.log);   // 1.17
-   getContentAreaRatio('Quicksand').then(console.log);   // 1.25
-   getContentAreaRatio('Prompt').then(console.log);      // 1.51
 */
 
 .font-sans {
     --content-area:  1.17em;
-    --highlight-px:  0.2em;
+    --highlight-px:  0.3em;
     --highlight-py:  0.1em;
     --highlight-gap: 0.1em;
 }
 
 .font-display {
     --content-area:  1.17em;
-    --highlight-px:  0.2em;
-    --highlight-py:  0.1em;
-    --highlight-gap: 0.1em;
-}
-
-.font-hero-sans {
-    --content-area:  1.25em;
-    --highlight-px:  0.2em;
-    --highlight-py:  0.1em;
-    --highlight-gap: 0.1em;
-}
-
-.font-hero-display {
-    --content-area:  1.51em;
-    --highlight-px:  0.2em;
+    --highlight-px:  0.3em;
     --highlight-py:  0.1em;
     --highlight-gap: 0.1em;
 }

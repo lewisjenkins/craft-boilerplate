@@ -16,7 +16,7 @@ The final command overlays `src/`, `templates/`, `package.json`, and `web/dist/f
 
 - **`src/css/`** — Tailwind 4 CLI setup. Modules:
   - `layout.css` — fluid root + `.contain` + single `sm:` breakpoint, all on a 1536px cap
-  - `fonts.css` — self-hosted `@font-face` rules (Work Sans, Material Symbols subset)
+  - `fonts.css` — self-hosted `@font-face` rules (Work Sans, Source Sans 3, JetBrains Mono, Material Symbols subset)
   - `nice.css` — typography module (`.nice`, with `.nice-sm/lg/xl/-white/-lists` variants)
   - `flow.css` — vertical-rhythm module (`.flow`)
   - `highlight.css` — translucent inline-text chip (`.highlight`, `.highlight-parent`)

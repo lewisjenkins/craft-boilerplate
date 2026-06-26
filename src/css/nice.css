@@ -40,7 +40,8 @@
       --nice-color-*             shared semantic colour slots (body, heading,
                                  link, muted, border, code-bg)
       --nice-{element}-{prop}    element-specific overrides (lead-color,
-                                 h1-size, h1-weight, table-cell-padding)
+                                 h1-size, h1-weight, h1-color … h6-color,
+                                 table-cell-padding)
 
    5. Three knobs drive the scale
       --nice-base            outer anchor (rem, pairs with fluid root)
@@ -102,43 +103,49 @@
         font-weight: var(--nice-heading-weight, 700);
         letter-spacing: var(--nice-heading-tracking, -0.01em);
         text-wrap: var(--nice-heading-wrap, wrap);
-        color: var(--nice-color-heading, inherit);
+        /* colour is set per-level below, each falling back to --nice-color-heading */
     }
 
     .nice :where(h1) {
         font-size: var(--nice-h1-size, var(--text-4xl));
         line-height: var(--text-4xl--line-height);
         font-weight: var(--nice-h1-weight, var(--nice-heading-weight, 700));
+        color: var(--nice-h1-color, var(--nice-color-heading, inherit));
     }
 
     .nice :where(h2) {
         font-size: var(--nice-h2-size, var(--text-3xl));
         line-height: var(--text-3xl--line-height);
         font-weight: var(--nice-h2-weight, var(--nice-heading-weight, 700));
+        color: var(--nice-h2-color, var(--nice-color-heading, inherit));
     }
 
     .nice :where(h3) {
         font-size: var(--nice-h3-size, var(--text-2xl));
         line-height: var(--text-2xl--line-height);
         font-weight: var(--nice-h3-weight, var(--nice-heading-weight, 700));
+        color: var(--nice-h3-color, var(--nice-color-heading, inherit));
     }
 
     .nice :where(h4) {
         font-size: var(--nice-h4-size, var(--text-xl));
         line-height: var(--text-xl--line-height);
         font-weight: var(--nice-h4-weight, var(--nice-heading-weight, 700));
+        color: var(--nice-h4-color, var(--nice-color-heading, inherit));
     }
 
     .nice :where(h5) {
         font-size: var(--nice-h5-size, var(--text-lg));
         line-height: var(--text-lg--line-height);
         font-weight: var(--nice-h5-weight, var(--nice-heading-weight, 700));
+        color: var(--nice-h5-color, var(--nice-color-heading, inherit));
     }
 
     .nice :where(h6) {
         font-size: var(--nice-h6-size, var(--text-base));
         line-height: var(--text-base--line-height);
         font-weight: var(--nice-h6-weight, var(--nice-heading-weight, 700));
+        color: var(--nice-h6-color, var(--nice-color-heading, inherit));
     }
 
     .nice :where(p.lead) {
@@ -149,7 +156,7 @@
     }
 
     .nice :where(p) {
-        text-wrap: var(--nice-body-wrap, pretty);
+        text-wrap: var(--nice-body-wrap, wrap);
     }
 
     .nice :where(a) {
@@ -173,7 +180,7 @@
 
     .nice :where(strong) {
         font-weight: var(--nice-strong-weight, 700);
-        color: var(--nice-strong-color, var(--nice-color-heading, inherit));
+        color: var(--nice-strong-color, inherit);
     }
 
     .nice :where(em) {
@@ -276,7 +283,7 @@
         display: flex;
         flex-direction: column;
         gap: var(--nice-li-spacing, 0.5em);
-        padding-left: var(--nice-list-indent, 1.5em);
+        padding-left: var(--nice-list-indent, 2em);
     }
 
     .nice.nice-lists :where(ul)       { list-style-type: disc; }

@@ -1,6 +1,7 @@
 @theme {
     --font-sans:    "Work Sans", system-ui, sans-serif;
-    --font-display: "Work Sans", system-ui, sans-serif;
+    --font-display: "Source Sans 3", system-ui, sans-serif;
+    --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
     --color-primary:   var(--color-sky-700);
     --color-secondary: var(--color-yellow-600);
@@ -17,11 +18,14 @@
 :root {
     --nice-font-body:    var(--font-sans);
     --nice-font-heading: var(--font-display);
+    --nice-font-mono:    var(--font-mono);
 
     --nice-color-body:    var(--color-gray-700);
     --nice-color-heading: var(--color-gray-950);
     --nice-lead-color:    var(--nice-color-heading);
     --nice-color-link:    var(--color-sky-700);
+    --nice-color-muted:   color-mix(in oklab, currentColor 80%, transparent);
+    --nice-color-code-bg: color-mix(in oklab, currentColor 8%, transparent);
 
     --nice-h1-weight:   900;
     --nice-lead-weight: 500;
@@ -51,20 +55,19 @@
        const m = ctx.measureText('M');
        return (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent) / fontSize;
    }
-   getContentAreaRatio('Work Sans').then(console.log);   // 1.17
+   getContentAreaRatio('Work Sans').then(console.log);   // 1.17 (measured in Chromium)
 */
 
 .font-sans {
-    --content-area:  1.17em;
+    --content-area:  1.17em;     /* Work Sans (measured) */
     --highlight-px:  0.3em;
     --highlight-py:  0.1em;
     --highlight-gap: 0.1em;
 }
 
 .font-display {
-    --content-area:  1.17em;
+    --content-area:  1.42em;     /* Source Sans 3 (measured) */
     --highlight-px:  0.3em;
     --highlight-py:  0.1em;
     --highlight-gap: 0.1em;
 }
-

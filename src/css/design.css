@@ -11,21 +11,22 @@
     --color-danger:  var(--color-red-600);
     --color-info:    var(--color-blue-500);
 
+    --color-body:    var(--color-gray-700);
+    --color-muted:   color-mix(in oklab, currentColor 80%, transparent);
+    --color-border:  color-mix(in oklab, currentColor 20%, transparent);
+    --color-code-bg: color-mix(in oklab, currentColor 8%, transparent);
+
     --color-button:       var(--color-primary);
-    --color-button-hover: color-mix(in oklab, var(--color-primary), black 10%);
+    --color-button-hover: color-mix(in oklab, var(--color-button), black 10%);
+    --color-button-text:  white;
 }
 
 :root {
-    --nice-font-body:    var(--font-sans);
     --nice-font-heading: var(--font-display);
-    --nice-font-mono:    var(--font-mono);
 
-    --nice-color-body:    var(--color-gray-700);
     --nice-color-heading: var(--color-gray-950);
     --nice-lead-color:    var(--nice-color-heading);
     --nice-color-link:    var(--color-sky-700);
-    --nice-color-muted:   color-mix(in oklab, currentColor 80%, transparent);
-    --nice-color-code-bg: color-mix(in oklab, currentColor 8%, transparent);
 
     --nice-h1-weight:   900;
     --nice-lead-weight: 500;

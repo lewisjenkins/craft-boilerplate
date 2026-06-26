@@ -64,10 +64,10 @@
 @layer components {
 
     .nice {
-        font-family: var(--nice-font-body, ui-sans-serif, system-ui, sans-serif);
+        font-family: var(--font-sans);
         font-size: var(--nice-base);
         line-height: var(--nice-line-height, 1.6);
-        color: var(--nice-color-body, inherit);
+        color: var(--nice-color-body, var(--color-body));
 
         --text-xs--line-height:   var(--nice-line-height, 1.6);
         --text-sm--line-height:   var(--nice-line-height, 1.6);
@@ -99,7 +99,7 @@
     }
 
     .nice :where(h1, h2, h3, h4, h5, h6) {
-        font-family: var(--nice-font-heading, var(--nice-font-body, ui-sans-serif, system-ui, sans-serif));
+        font-family: var(--nice-font-heading, var(--font-sans));
         font-weight: var(--nice-heading-weight, 700);
         letter-spacing: var(--nice-heading-tracking, -0.01em);
         text-wrap: var(--nice-heading-wrap, wrap);
@@ -210,43 +210,43 @@
     }
 
     .nice :where(kbd) {
-        font-family: var(--nice-font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+        font-family: var(--font-mono);
         font-size: 0.85em;
         padding: 0.1em 0.4em;
-        background: var(--nice-color-code-bg, color-mix(in oklab, currentColor 8%, transparent));
-        border: 1px solid var(--nice-color-border, color-mix(in oklab, currentColor 20%, transparent));
+        background: var(--nice-color-code-bg, var(--color-code-bg));
+        border: 1px solid var(--nice-color-border, var(--color-border));
         border-bottom-width: 0.15em;
         border-radius: 0.25em;
     }
 
     .nice :where(samp) {
-        font-family: var(--nice-font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+        font-family: var(--font-mono);
         font-size: 0.9em;
     }
 
     .nice :where(code) {
-        font-family: var(--nice-font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
+        font-family: var(--font-mono);
         font-size: 0.9em;
         padding: 0.15em 0.35em;
-        background: var(--nice-color-code-bg, color-mix(in oklab, currentColor 8%, transparent));
+        background: var(--nice-color-code-bg, var(--color-code-bg));
         border-radius: 0.25em;
     }
 
     .nice :where(blockquote) {
         padding-left: 1em;
-        border-left: 0.1875em solid var(--nice-color-border, color-mix(in oklab, currentColor 20%, transparent));
-        color: var(--nice-color-muted, color-mix(in oklab, currentColor 80%, transparent));
+        border-left: 0.1875em solid var(--nice-color-border, var(--color-border));
+        color: var(--nice-color-muted, var(--color-muted));
         font-style: italic;
     }
 
     .nice :where(hr) {
         border: 0;
-        border-top: 1px solid var(--nice-color-border, color-mix(in oklab, currentColor 20%, transparent));
+        border-top: 1px solid var(--nice-color-border, var(--color-border));
     }
 
     .nice :where(pre) {
         padding: 1em 1.25em;
-        background: var(--nice-color-code-bg, color-mix(in oklab, currentColor 8%, transparent));
+        background: var(--nice-color-code-bg, var(--color-code-bg));
         border-radius: 0.375em;
         overflow-x: auto;
         font-size: 0.9em;
@@ -292,7 +292,7 @@
     .nice.nice-lists :where(ol)       { list-style-type: decimal; }
 
     .nice.nice-lists :where(li)::marker {
-        color: var(--nice-color-muted, color-mix(in oklab, currentColor 80%, transparent));
+        color: var(--nice-color-muted, var(--color-muted));
     }
 
     .nice.nice-lists :where(li > ul, li > ol) {
@@ -319,7 +319,7 @@
     }
 
     .nice :where(thead) {
-        border-bottom: 0.125em solid var(--nice-color-border, color-mix(in oklab, currentColor 20%, transparent));
+        border-bottom: 0.125em solid var(--nice-color-border, var(--color-border));
     }
 
     .nice :where(th, td) {
@@ -329,7 +329,7 @@
     }
 
     .nice :where(tbody tr + tr) {
-        border-top: 1px solid var(--nice-color-border, color-mix(in oklab, currentColor 20%, transparent));
+        border-top: 1px solid var(--nice-color-border, var(--color-border));
     }
 
     .nice :where(th) {
@@ -347,7 +347,7 @@
     .nice :where(figcaption) {
         margin-top: 0.5em;
         font-size: var(--text-sm);
-        color: var(--nice-color-muted, color-mix(in oklab, currentColor 80%, transparent));
+        color: var(--nice-color-muted, var(--color-muted));
         text-align: var(--nice-figcaption-align, center);
     }
 

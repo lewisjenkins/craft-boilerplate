@@ -21,19 +21,24 @@
            <span class="material-symbols-outlined transition-transform duration-150 group-hover:translate-x-1">arrow_right_alt</span>
        </a>
 
-   Brand colour comes from --color-button / --color-button-hover (declared in
-   design.css's @theme). Override at :root or on a scoped variant class to
-   reskin without re-declaring the .btn rule.
+   Brand colour comes from --color-button (declared in design.css's @theme);
+   --color-button-hover derives from it (10% darker), so overriding just
+   --color-button at :root or on a scoped variant class reskins the button —
+   hover included — without re-declaring the .btn rule. Text colour is
+   --color-button-text (default white) — override it for a light button face
+   (e.g. a yellow brand colour that needs dark text). Override
+   --color-button-hover too only if you want a non-default hover.
    ========================================================================== */
 
 @layer components {
     .btn {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 0.5rem;
         padding: 1rem 2rem;
         background-color: var(--color-button);
-        color: white;
+        color: var(--color-button-text);
         border: 1px solid var(--color-button);
         border-radius: 0.125rem;
         font-size: 0.875rem;

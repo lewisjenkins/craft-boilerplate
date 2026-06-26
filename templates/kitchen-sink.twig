@@ -71,13 +71,13 @@
 
     <h3>Muted text</h3>
 
-    <p>The <code>--nice-color-muted</code> token carries secondary copy — timestamps, captions, metadata — at a
-        reduced contrast. It's the same value the module uses internally for blockquotes, list markers and
-        figcaptions, exposed as a token so templates can reuse it via <code>text-(--nice-color-muted)</code>.</p>
+    <p>The <code>text-muted</code> utility carries secondary copy — timestamps, captions, metadata — at a
+        reduced contrast. It's the same <code>--color-muted</code> token the module falls back to for blockquotes,
+        list markers and figcaptions, so prose and chrome share one muted value.</p>
 
-    <p class="text-sm text-(--nice-color-muted)">Posted on Wednesday, March 25, 2026 — this paragraph is muted.
-        Because the token keys off <code>currentColor</code>, it adapts to both the light and dark panels below
-        without an explicit per-palette override.</p>
+    <p class="text-sm text-muted">Posted on Wednesday, March 25, 2026 — this paragraph is muted. Because the token
+        is an alpha mix of <code>currentColor</code>, it adapts to both the light and dark panels below without an
+        explicit per-palette override.</p>
 
     <h3>Lists</h3>
 

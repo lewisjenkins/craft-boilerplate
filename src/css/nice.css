@@ -99,7 +99,7 @@
     }
 
     .nice :where(h1, h2, h3, h4, h5, h6) {
-        font-family: var(--nice-font-heading, var(--font-sans));
+        font-family: var(--nice-font-heading, var(--font-display, var(--font-sans)));
         font-weight: var(--nice-heading-weight, 700);
         letter-spacing: var(--nice-heading-tracking, -0.01em);
         text-wrap: var(--nice-heading-wrap, wrap);
@@ -110,49 +110,49 @@
         font-size: var(--nice-h1-size, var(--text-4xl));
         line-height: var(--text-4xl--line-height);
         font-weight: var(--nice-h1-weight, var(--nice-heading-weight, 700));
-        color: var(--nice-h1-color, var(--nice-color-heading, inherit));
+        color: var(--nice-h1-color, var(--nice-color-heading, var(--color-heading, inherit)));
     }
 
     .nice :where(h2) {
         font-size: var(--nice-h2-size, var(--text-3xl));
         line-height: var(--text-3xl--line-height);
         font-weight: var(--nice-h2-weight, var(--nice-heading-weight, 700));
-        color: var(--nice-h2-color, var(--nice-color-heading, inherit));
+        color: var(--nice-h2-color, var(--nice-color-heading, var(--color-heading, inherit)));
     }
 
     .nice :where(h3) {
         font-size: var(--nice-h3-size, var(--text-2xl));
         line-height: var(--text-2xl--line-height);
         font-weight: var(--nice-h3-weight, var(--nice-heading-weight, 700));
-        color: var(--nice-h3-color, var(--nice-color-heading, inherit));
+        color: var(--nice-h3-color, var(--nice-color-heading, var(--color-heading, inherit)));
     }
 
     .nice :where(h4) {
         font-size: var(--nice-h4-size, var(--text-xl));
         line-height: var(--text-xl--line-height);
         font-weight: var(--nice-h4-weight, var(--nice-heading-weight, 700));
-        color: var(--nice-h4-color, var(--nice-color-heading, inherit));
+        color: var(--nice-h4-color, var(--nice-color-heading, var(--color-heading, inherit)));
     }
 
     .nice :where(h5) {
         font-size: var(--nice-h5-size, var(--text-lg));
         line-height: var(--text-lg--line-height);
         font-weight: var(--nice-h5-weight, var(--nice-heading-weight, 700));
-        color: var(--nice-h5-color, var(--nice-color-heading, inherit));
+        color: var(--nice-h5-color, var(--nice-color-heading, var(--color-heading, inherit)));
     }
 
     .nice :where(h6) {
         font-size: var(--nice-h6-size, var(--text-base));
         line-height: var(--text-base--line-height);
         font-weight: var(--nice-h6-weight, var(--nice-heading-weight, 700));
-        color: var(--nice-h6-color, var(--nice-color-heading, inherit));
+        color: var(--nice-h6-color, var(--nice-color-heading, var(--color-heading, inherit)));
     }
 
     .nice :where(p.lead) {
         font-size: var(--nice-lead-size, var(--text-xl));
         line-height: var(--text-xl--line-height);
         font-weight: var(--nice-lead-weight, inherit);
-        color: var(--nice-lead-color, inherit);
+        color: var(--nice-lead-color, var(--nice-color-heading, var(--color-heading, inherit)));
     }
 
     .nice :where(p) {
@@ -160,7 +160,7 @@
     }
 
     .nice :where(a) {
-        color: var(--nice-color-link, currentColor);
+        color: var(--nice-color-link, var(--color-link));
         text-decoration: underline;
         text-underline-offset: 0.15em;
         text-decoration-thickness: 0.05em;
@@ -172,7 +172,7 @@
     }
 
     .nice :where(a:focus-visible) {
-        outline: 0.125em solid var(--nice-color-link, currentColor);
+        outline: 0.125em solid var(--nice-color-link, var(--color-link));
         outline-offset: 0.15em;
         border-radius: 0.125em;
         text-decoration-thickness: 0.12em;
@@ -263,11 +263,11 @@
     .nice :where(summary) {
         cursor: pointer;
         font-weight: var(--nice-summary-weight, 700);
-        color: var(--nice-color-heading, inherit);
+        color: var(--nice-color-heading, var(--color-heading, inherit));
     }
 
     .nice :where(summary:focus-visible) {
-        outline: 0.125em solid var(--nice-color-link, currentColor);
+        outline: 0.125em solid var(--nice-color-link, var(--color-link));
         outline-offset: 0.15em;
         border-radius: 0.125em;
     }
@@ -301,7 +301,7 @@
 
     .nice.nice-lists :where(dt) {
         font-weight: var(--nice-dt-weight, 700);
-        color: var(--nice-color-heading, inherit);
+        color: var(--nice-color-heading, var(--color-heading, inherit));
     }
 
     .nice.nice-lists :where(dt + dd) {
@@ -334,7 +334,7 @@
 
     .nice :where(th) {
         font-weight: var(--nice-table-header-weight, 700);
-        color: var(--nice-color-heading, inherit);
+        color: var(--nice-color-heading, var(--color-heading, inherit));
     }
 
     .nice :where(img, video) {

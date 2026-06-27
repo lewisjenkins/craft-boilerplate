@@ -5,12 +5,14 @@
 
     --color-primary:   var(--color-sky-700);
     --color-secondary: var(--color-yellow-600);
+    --color-link:      var(--color-primary);
 
     --color-success: var(--color-green-600);
     --color-warning: var(--color-amber-500);
     --color-danger:  var(--color-red-600);
     --color-info:    var(--color-blue-500);
 
+    --color-heading: var(--color-gray-950);
     --color-body:    var(--color-gray-700);
     --color-muted:   color-mix(in oklab, currentColor 80%, transparent);
     --color-border:  color-mix(in oklab, currentColor 20%, transparent);
@@ -22,12 +24,6 @@
 }
 
 :root {
-    --nice-font-heading: var(--font-display);
-
-    --nice-color-heading: var(--color-gray-950);
-    --nice-lead-color:    var(--nice-color-heading);
-    --nice-color-link:    var(--color-sky-700);
-
     --nice-h1-weight:   900;
     --nice-lead-weight: 500;
 }
@@ -35,7 +31,6 @@
 .nice-white {
     --nice-color-body:    var(--color-white);
     --nice-color-heading: currentColor;
-    --nice-lead-color:    currentColor;
     --nice-color-link:    currentColor;
     --nice-color-border:  color-mix(in oklab, currentColor 50%, transparent);
     --nice-color-code-bg: color-mix(in oklab, currentColor 20%, transparent);

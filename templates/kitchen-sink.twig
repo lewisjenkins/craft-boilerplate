@@ -69,16 +69,6 @@
     <p>Keyboard input: press <kbd>⌘</kbd>&nbsp;<kbd>K</kbd> to open the command palette. Sample output uses the
         monospace face: <samp>→ 200 OK</samp>.</p>
 
-    <h3>Muted text</h3>
-
-    <p>The <code>text-muted</code> utility carries secondary copy — timestamps, captions, metadata — at a
-        reduced contrast. It's the same <code>--color-muted</code> token the module falls back to for blockquotes,
-        list markers and figcaptions, so prose and chrome share one muted value.</p>
-
-    <p class="text-sm text-muted">Posted on Wednesday, March 25, 2026 — this paragraph is muted. Because the token
-        is an alpha mix of <code>currentColor</code>, it adapts to both the light and dark panels below without an
-        explicit per-palette override.</p>
-
     <h3>Lists</h3>
 
     <p>Unordered and ordered lists, with nested children. Inter-item spacing uses <code>flex</code> + <code>gap</code>
@@ -208,7 +198,7 @@ greet("World");</code></pre>
             alt: 'Placeholder figure',
             class: 'absolute inset-0 w-full h-full object-cover'
         }) }}
-        <figcaption>Figure 1. A placeholder illustration, captioned below at <code>--text-sm</code>. The image picks up <code>max-width: 100%</code> from <code>.nice</code>'s <code>img</code> rule.</figcaption>
+        <figcaption>Figure 1. A placeholder illustration, captioned below at <code>--text-sm</code>. The image picks up the <code>border-radius: 0.375em</code> and <code>max-width: 100%</code> from <code>.nice</code>'s <code>img</code> rule.</figcaption>
     </figure>
 
     <p>A closing paragraph returns to the body rhythm after the figure, completing the visual pattern: block element
@@ -216,11 +206,11 @@ greet("World");</code></pre>
         base gap.</p>
 
     <p class="font-display font-bold text-5xl highlight-parent">
-        <span class="highlight bg-red-500/50">This is a headline. there are many like it but this one is mine</span>
+        <span class="highlight bg-primary/50">This is a headline. there are many like it but this one is mine</span>
     </p>
 
     <p class="font-sans text-2xl highlight-parent">
-        <span class="highlight bg-red-500/50">This is a highlighted paragraph of text that spans multiple rows. And this is also a highlighted paragraph of text that spans additional rows.</span>
+        <span class="highlight bg-secondary/50">This is a highlighted paragraph of text that spans multiple rows. And this is also a highlighted paragraph of text that spans additional rows.</span>
     </p>
 
     <div class="flex gap-4 items-center">
@@ -232,6 +222,12 @@ greet("World");</code></pre>
     </div>
 
     <button class="btn self-start">Submit</button>
+
+    <div class="flex flex-col">
+
+        <button class="btn">Full Width</button>
+
+    </div>
 
 {% endset %}
 
